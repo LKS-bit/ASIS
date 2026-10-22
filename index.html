@@ -1,40 +1,27 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AS IS vs. TO BE — Cadena de abastecimiento e inventario del Hospital de Villarrica</title>
+<title>TO BE — Cadena de abastecimiento e inventario del Hospital de Villarrica</title>
 <style>
 :root{--bg:#fbfaf7;--ink:#26261f;--muted:#6f6e66;--line:#d9d7cd;--band:#f1efe8;--band2:#e9e6dc;
 --g-f:#ecebe6;--g-s:#8a8980;--b-f:#dbe8fb;--b-s:#2a78d6;--p-f:#e7e1f7;--p-s:#6a4fc4;--o-f:#fde6cb;--o-s:#d9822b;--r-f:#f8d8d4;--r-s:#c8372d;--gr-f:#d8f0d8;--gr-s:#2f8f2f;
---accent:#2a78d6;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1b18;--ink:#ecebe4;--muted:#a3a299;--line:#3b3a34;--band:#25251f;--band2:#2d2c26;
---g-f:#33332e;--g-s:#9a998f;--b-f:#1c3556;--b-s:#6aa6ef;--p-f:#2f2751;--p-s:#a18ff0;--o-f:#4a3115;--o-s:#f0a458;--r-f:#4f201c;--r-s:#ef7d73;--gr-f:#1d3b1d;--gr-s:#72c872;
---accent:#6aa6ef}}
+--g-f:#33332e;--g-s:#9a998f;--b-f:#1c3556;--b-s:#6aa6ef;--p-f:#2f2751;--p-s:#a18ff0;--o-f:#4a3115;--o-s:#f0a458;--r-f:#4f201c;--r-s:#ef7d73;--gr-f:#1d3b1d;--gr-s:#72c872}}
 html{color-scheme:light dark}
 body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
-header{padding:12px 18px 6px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
-.h-title h1{font-size:18px;margin:0 0 2px}
-.h-title p{margin:0;color:var(--muted);font-size:12.5px}
-.mode-switch{display:flex;gap:4px;background:var(--band);padding:4px;border-radius:10px;border:1px solid var(--line)}
-.mode-switch button{border:0;background:transparent;padding:6px 12px;border-radius:7px;font-weight:600;color:var(--muted);cursor:pointer}
-.mode-switch button.active{background:var(--bg);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,0.12)}
-.bar{display:flex;flex-wrap:wrap;gap:6px;padding:8px 18px;align-items:center}
-.bar span{font-size:12px;color:var(--muted);font-weight:600;margin-right:4px}
-button.sec-btn{font:inherit;font-size:12.5px;border:1px solid var(--line);background:var(--band);color:var(--ink);border-radius:8px;padding:5px 10px;cursor:pointer}
-button.sec-btn:hover{background:var(--band2)}
-.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:2px 18px 10px;font-size:12px;color:var(--muted);align-items:center;border-bottom:1px solid var(--line)}
+header{padding:14px 18px 6px}h1{font-size:18px;margin:0 0 2px}header p{margin:0;color:var(--muted);font-size:12.5px}
+.bar{display:flex;flex-wrap:wrap;gap:6px;padding:8px 18px}
+button{font:inherit;font-size:12.5px;border:1px solid var(--line);background:var(--band);color:var(--ink);border-radius:8px;padding:5px 10px;cursor:pointer}
+button:hover{background:var(--band2)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:4px 18px 10px;font-size:12px;color:var(--muted);align-items:center}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;border:1.5px solid;vertical-align:-2px;margin-right:4px}
 .legend svg{vertical-align:middle}
-.board-section{display:flex;flex-direction:column}
-.board-badge{padding:6px 18px;background:var(--band2);font-weight:700;font-size:13px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
-.board-badge small{font-weight:400;color:var(--muted);font-size:12px}
-.wrap{max-height:74vh;overflow:auto;border-bottom:2px solid var(--line);position:relative}
-body.mode-both .wrap{max-height:42vh}
-.grid{display:flex;width:max-content}
-.lanes{position:sticky;left:0;z-index:5;width:128px;flex:none;background:var(--bg);border-right:1px solid var(--line)}
-.lanes div{box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;padding:0 8px;font-size:12px;font-weight:600;border-bottom:1px solid var(--line)}
-.lanes small.warn{font-weight:400;color:var(--o-s);font-size:11px}
-.lanes small.info{font-weight:400;color:var(--muted);font-size:11px}
+#wrap{max-height:76vh;overflow:auto;border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative}
+#grid{display:flex;width:max-content}
+#lanes{position:sticky;left:0;z-index:5;width:128px;flex:none;background:var(--bg);border-right:1px solid var(--line)}
+#lanes div{box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;padding:0 8px;font-size:12px;font-weight:600;border-bottom:1px solid var(--line)}
+#lanes small{font-weight:400;color:var(--muted);font-size:11px}
 svg text{font-family:inherit;fill:var(--ink)}
 .k-g{fill:var(--g-f);stroke:var(--g-s)}.k-b{fill:var(--b-f);stroke:var(--b-s)}.k-p{fill:var(--p-f);stroke:var(--p-s)}
 .k-o{fill:var(--o-f);stroke:var(--o-s)}.k-r{fill:var(--r-f);stroke:var(--r-s)}.k-gr{fill:var(--gr-f);stroke:var(--gr-s)}
@@ -43,283 +30,114 @@ svg text{font-family:inherit;fill:var(--ink)}
 .e{fill:none;stroke:var(--ink);stroke-width:1.5}.dash{stroke-dasharray:5 4;stroke:var(--muted);stroke-width:1.3}
 .lb{font-size:10.5px;font-weight:600;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round}
 .hd{font-size:13px;font-weight:700}
-.hidden{display:none !important}
 </style></head><body>
-
-<header>
-  <div class="h-title">
-    <h1 id="main-title">AS IS vs. TO BE — Cadena de abastecimiento e inventario del Hospital de Villarrica</h1>
-    <p id="main-sub">Proyecto Capstone de Consultoría · Ingeniería Civil Industrial, Universidad del Desarrollo · Comparación sección por sección.</p>
-  </div>
-  <div class="mode-switch">
-    <button id="btn-asis" onclick="setMode('asis')">AS IS (Actual)</button>
-    <button id="btn-tobe" onclick="setMode('tobe')">TO BE (Propuesta)</button>
-    <button id="btn-both" class="active" onclick="setMode('both')">Comparar (Espejo)</button>
-  </div>
-</header>
-
-<div class="bar" id="nav"><span>Ir a sección:</span></div>
-
+<header><h1>TO BE — Cadena de abastecimiento e inventario del Hospital de Villarrica</h1>
+<p>Proyecto Capstone de Consultoría · Ingeniería Civil Industrial, Universidad del Desarrollo · Propuesta TO BE preliminar: el hospital debe validar actividades, responsables y controles. Misma estructura del AS IS para comparar sección por sección.</p></header>
+<div class="bar" id="nav"></div>
 <div class="legend">
-  <span><i style="background:var(--g-f);border-color:var(--g-s)"></i>Actividad regular / estandarizada</span>
-  <span><i style="background:var(--gr-f);border-color:var(--gr-s)"></i>Mejora TO BE / control automatizado / consumo efectivo</span>
-  <span><i style="background:var(--b-f);border-color:var(--b-s)"></i>Movimiento físico</span>
-  <span><i style="background:var(--p-f);border-color:var(--p-s)"></i>SASUR, Excel, Power Query y documentos</span>
-  <span><i style="background:var(--o-f);border-color:var(--o-s)"></i>Demora / punto crítico / alerta preventiva</span>
-  <span><i style="background:var(--r-f);border-color:var(--r-s)"></i>Vencimiento, destrucción, pérdida</span>
-  <span><svg width="30" height="10"><path d="M1 5H29" class="e" style="stroke:var(--ink)"/></svg> secuencia</span>
-  <span><svg width="30" height="10"><path d="M1 5H29" class="e dash"/></svg> información / causa / retroalimentación</span>
-  <span>▭ actividad · ◇ decisión · ⎘ documento · ⛁ base de datos · ○ inicio / ◎ término</span>
+<span><i style="background:var(--g-f);border-color:var(--g-s)"></i>Actividad operativa estandarizada</span>
+<span><i style="background:var(--gr-f);border-color:var(--gr-s)"></i>Mejora TO BE / control automatizado / consumo efectivo</span>
+<span><i style="background:var(--b-f);border-color:var(--b-s)"></i>Movimiento físico controlado</span>
+<span><i style="background:var(--p-f);border-color:var(--p-s)"></i>Sistemas y registros (SASUR, Power Query, semáforo, indicadores)</span>
+<span><i style="background:var(--o-f);border-color:var(--o-s)"></i>Decisión crítica / alerta preventiva</span>
+<span><svg width="30" height="10"><path d="M1 5H29" class="e" style="stroke:var(--ink)"/></svg> flujo secuencial</span>
+<span><svg width="30" height="10"><path d="M1 5H29" class="e dash"/></svg> información, alerta o retroalimentación</span>
+<span>▭ actividad · ◇ decisión · ⎘ documento · ⛁ base de datos · ○ inicio / ◎ término</span>
 </div>
-
-<!-- TABLERO AS IS -->
-<div class="board-section" id="sec-asis">
-  <div class="board-badge">
-    <span>MODELO AS IS — Situación Actual</span>
-    <small>Levantamiento preliminar: los detalles marcados “Por validar” requieren confirmación del hospital.</small>
-  </div>
-  <div class="wrap" id="wrap-asis">
-    <div class="grid">
-      <div class="lanes" id="lanes-asis"></div>
-      <svg id="svg-asis" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tablero BPMN AS IS en siete secciones"></svg>
-    </div>
-  </div>
-</div>
-
-<!-- TABLERO TO BE -->
-<div class="board-section" id="sec-tobe">
-  <div class="board-badge">
-    <span>MODELO TO BE — Situación Propuesta</span>
-    <small>Propuesta preliminar con controles automatizados, semáforo de stock y ciclo cerrado de 5 indicadores.</small>
-  </div>
-  <div class="wrap" id="wrap-tobe">
-    <div class="grid">
-      <div class="lanes" id="lanes-tobe"></div>
-      <svg id="svg-tobe" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tablero BPMN TO BE en siete secciones"></svg>
-    </div>
-  </div>
-</div>
-
+<div id="wrap"><div id="grid"><div id="lanes"></div><svg id="svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tablero BPMN TO BE en siete secciones"></svg></div></div>
 <script>
-const wrapText=(t,m)=>{const out=[];let c='';t.split(' ').forEach(w=>{if((c+' '+w).trim().length>m&&c){out.push(c);c=w}else c=(c+' '+w).trim()});if(c)out.push(c);return out};
-const svgTxt=(lines,cx,cy,fs,extra='')=>{const lh=fs+2.5,y0=cy-(lines.length-1)*lh/2;return `<text text-anchor="middle" font-size="${fs}" ${extra}>`+lines.map((l,i)=>`<tspan x="${cx}" y="${y0+i*lh}" dominant-baseline="central">${l}</tspan>`).join('')+'</text>'};
-
-// ================= RENDER AS IS =================
-function buildAsIs(){
-  const P=170,NW=130,NH=60,LH=150,HB=50,RT=[14,80];
-  const LANES=[["Servicios Clínicos","",""],["Abastecimiento y Compras","",""],["Gestión de Contratos","Responsabilidad por validar","warn"],["Proveedores y Despacho","",""],["Recepción y Bodegas","",""],["Sistemas y Registros","SASUR y Excel","warn"]];
-  const SECS=[["1","Programación",3],["2","Consolidación",3],["3","Adquisición",4],["4","Recepción",4],["5","Almacenamiento",5],["6","Retiro y consumo",5],["7","Vencimientos y destino final",7]];
-  let sx=[],x=10;SECS.forEach(s=>{sx.push(x);x+=s[2]*P+30});const W=x+10,H=HB+6*LH;
-  const N={};
-  function n(id,s,c,l,t,k,txt,r=0,w=1){const nx=sx[s]+15+c*P,ny=HB+l*LH+RT[r];let o={id,t,k,txt,w};
-   if(t=='d'){o.x=nx;o.y=HB+l*LH+RT[0]-12;o.w2=NW;o.h=84}
-   else if(t=='s'||t=='e'){o.x=nx+NW/2-15;o.y=ny+30-15;o.w2=30;o.h=30}
-   else{o.x=nx;o.y=ny;o.w2=w*P-40;o.h=NH}
-   o.cx=o.x+o.w2/2;o.cy=o.y+o.h/2;N[id]=o}
-  n('s1',0,0,0,'s','g','Inicio del mes');n('p1',0,1,0,'a','g','Programan mensualmente sus requerimientos de insumos');
-  n('p2',0,1,0,'n','o','Criterio operativo y costumbre; sin vínculo sistemático con el consumo histórico real. Punto crítico: programado ≠ consumido',1,2);
-  n('p3',0,2,0,'doc','p','Requerimientos mensuales');
-  n('c0',1,0,5,'db','p','SASUR');n('c1',1,0,1,'a','g','Descargan reportes de SASUR: stock, programación, licitaciones, ICP');
-  n('c3',1,1,5,'doc','p','Planilla Excel');n('c2',1,1,1,'a','p','Cruzan manualmente los reportes en Excel');
-  n('c4',1,2,1,'doc','p','Consolidado de compras');n('c5',1,1,1,'n','o','Sin integración automática entre reportes. Preparar la información toma ≈ 1 día completo',1,2);
-  n('q1',2,0,1,'d','a','¿Qué canal de abastecimiento corresponde?');n('q2',2,1,1,'a','g','Revisa informe ICP mensual de CENABAST');
-  n('q3',2,1,1,'n','o','Cumplimiento informado ≈ 71 %',1);n('q4',2,1,2,'a','g','Revisa saldo del convenio vigente · Por validar');
-  n('q5',2,1,2,'a','g','Prepara bases técnicas neutras (nueva licitación) · Por validar',1);n('q6',2,2,1,'a','g','Emite orden de compra contra el saldo disponible',1);
-  n('q7',2,3,1,'doc','p','Orden de compra');
-  n('r1',3,0,3,'a','b','Proveedor o CENABAST despacha la mercadería');n('r2',3,1,4,'a','b','Recepción física de la mercadería');
-  n('r3',3,2,4,'d','a','¿El ingreso digital a SASUR se ha realizado?');n('r4',3,3,4,'a','o','Demora previa al registro digital ≈ 48 h (hasta 1 semana con incidencias)',1);
-  n('r5',3,1,5,'n','o','Lo físicamente recibido no es lo visible en SASUR hasta el ingreso digital',0,2);
-  n('a1',4,0,5,'a','p','Registra el ingreso en SASUR');n('a2',4,1,4,'a','g','Distribuye el inventario entre bodegas');
-  n('a2n',4,1,4,'n','p','El reporte de stock identifica 27 bodegas',1);n('a3',4,2,4,'d','a','¿Se requiere traslado interno?');
-  n('a4',4,3,4,'a','b','Traslado interno entre bodegas',1);n('a4n',4,3,5,'n','o','Durante el movimiento el stock puede no figurar disponible en SASUR');
-  n('a5',4,4,4,'a','g','Stock disponible para retiro');
-  n('t1',5,0,0,'a','g','Solicitan insumos a bodega');n('t4',5,1,0,'n','o','Diferenciar programado, retirado y consumido. Ejemplo ilustrativo: 1.000 programadas vs 200–300 retiradas (no es un promedio general)',1,2);
-  n('t2',5,1,4,'a','b','Retiran efectivamente los insumos');n('t3',5,2,5,'a','p','Registran el retiro en SASUR');
-  n('t5',5,3,0,'d','a','¿El producto se consume efectivamente?');n('t6',5,4,0,'e','gr','Consumo clínico efectivo');
-  n('t7',5,4,4,'a','o','Existencias que permanecen sin consumir');
-  n('u1',6,0,5,'a','p','Consultan reporte de vencimientos a 180 días · responsable por validar');n('u2',6,1,5,'doc','p','Reporte de vencimientos a 180 días');
-  n('u3',6,2,4,'d','a','¿Se consume antes del vencimiento?');n('u4',6,3,0,'e','gr','Consumo efectivo');
-  n('u5',6,3,4,'a','o','Existencia remanente o sobrestock');n('u6',6,4,4,'d','a','¿Hay alternativa de uso o redistribución? Por validar');
-  n('u7',6,5,4,'a','b','Canje informal vía WhatsApp con la red hospitalaria');n('u8',6,5,4,'a','r','Destrucción certificada',1);
-  n('u9',6,6,4,'e','gr','Eventual canje exitoso');n('u10',6,6,4,'e','r','Pérdida por vencimiento / destrucción',1);
-  const E=[['p3','c1','Requerimientos'],['s1','p1'],['p1','p3'],['p1','p2','','dash b t'],['c0','c1','','dash t b'],['c1','c2'],['c3','c2','','dash t b'],['c2','c4'],['c2','c5','','dash b t'],
-  ['c4','q1','Consolidado\nde compras'],['q1','q2','CENABAST'],['q1','q4','Convenio\nvigente'],['q1','q5','Nueva licitación\nsin cartera'],['q2','q3','','dash b t'],['q2','q7'],['q4','q6','Si hay saldo\ndisponible'],['q6','q7','','near'],['q5','q7','','near'],
-  ['q7','r1','Orden de compra\ny despacho'],['r1','r2'],['r2','r3'],['r3','r4','No','b l'],['r3','a1','Sí · producto recibido\ny registro de ingreso','near'],['r4','a1','','near'],['r2','r5','','dash b t'],
-  ['a1','a2'],['a2','a3'],['a2','a2n','','dash b t'],['a3','a4','Sí'],['a3','a5','No'],['a4','a5'],['a4','a4n','','dash b t'],
-  ['a5','t1','Stock\ndisponible'],['t1','t2'],['t2','t3','','dash'],['t2','t5','','near'],['t5','t6','Sí'],['t5','t7','No','near'],
-  ['t7','u1','Existencias remanentes\nsin consumir'],['u1','u2'],['u2','u3'],['u3','u4','Sí','xs'],['u3','u5','No'],['u5','u6'],['u6','u7','Sí\n(por validar)'],['u6','u8','No'],['u7','u9'],['u8','u10']];
-
-  let s=`<defs><marker id="ar-asis" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
-  SECS.forEach((q,i)=>{s+=`<rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${H}" fill="${i%2?'var(--band)':'var(--bg)'}" opacity="${i%2?.55:1}"/><rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${HB-6}" fill="var(--band2)"/><text class="hd" x="${sx[i]+12}" y="${(HB-6)/2}" dominant-baseline="central">${q[0]} · ${q[1].toUpperCase()}</text>`});
-  for(let l=0;l<=6;l++)s+=`<line x1="0" x2="${W}" y1="${HB+l*LH}" y2="${HB+l*LH}" stroke="var(--line)"/>`;
-  const L=o=>o.x,Rg=o=>o.x+o.w2;
-  E.forEach(([a,b,lbl,opt=''])=>{const A=N[a],B=N[b],f=opt.split(' ');let p;
-   if(f.includes('b')&&f.includes('t'))p=[[A.cx,A.y+A.h],[A.cx,B.y]];
-   else if(f.includes('t')&&f.includes('b'))p=[[A.cx,A.y],[A.cx,B.y+B.h]];
-   else if(f.includes('b')&&f.includes('l'))p=[[A.cx,A.y+A.h],[A.cx,B.cy],[L(B),B.cy]];
-   else{const sr=Rg(A),tl=L(B);let xm=(sr+tl)/2;if(f.includes('near'))xm=tl-14;if(f.includes('xs'))xm=sr+20;
-    p=A.cy==B.cy?[[sr,A.cy],[tl,B.cy]]:[[sr,A.cy],[xm,A.cy],[xm,B.cy],[tl,B.cy]]}
-   s+=`<polyline class="e ${f.includes('dash')?'dash':''}" points="${p.map(q=>q.join(',')).join(' ')}" marker-end="url(#ar-asis)"/>`;
-  });
-  const sh=(o)=>{const c='k-'+o.k,{x,y,w2:w,h}=o;
-   if(o.t=='a')return `<rect class="${c} sh" x="${x}" y="${y}" width="${w}" height="${h}" rx="7"/>`+svgTxt(wrapText(o.txt,22),o.cx,o.cy,10.5);
-   if(o.t=='n')return `<rect class="${c} nt" x="${x}" y="${y}" width="${w}" height="${h}" rx="7" fill-opacity=".6"/>`+svgTxt(wrapText(o.txt,w>200?50:22),o.cx,o.cy,10,'font-style="italic"');
-   if(o.t=='d')return `<polygon class="${c} sh" points="${o.cx},${y} ${x+w},${o.cy} ${o.cx},${y+h} ${x},${o.cy}"/>`+svgTxt(wrapText(o.txt,17),o.cx,o.cy,9.5);
-   if(o.t=='doc')return `<path class="${c} sh" d="M${x},${y} h${w} v${h-9} c${-w*.25},-10 ${-w*.25},10 ${-w*.5},0 s${-w*.25},10 ${-w*.5},0 z"/>`+svgTxt(wrapText(o.txt,22),o.cx,o.cy-3,10.5);
-   if(o.t=='db'){const bw=100,bx=x+(w-bw)/2;return `<path class="${c} sh" d="M${bx},${y+9} a50,9 0 0 1 ${bw},0 v${h-18} a50,9 0 0 1 ${-bw},0 z"/><path class="${c} sh" fill="none" d="M${bx},${y+9} a50,9 0 0 0 ${bw},0"/>`+svgTxt([o.txt],o.cx,o.cy+4,11,'font-weight="700"')}
-   if(o.t=='s'||o.t=='e')return `<circle class="${c}" cx="${o.cx}" cy="${o.cy}" r="15" stroke-width="${o.t=='e'?3.5:1.5}"/>`+svgTxt(wrapText(o.txt,22),o.cx,o.cy+34,10);
-   return''};
-  Object.values(N).forEach(o=>s+=sh(o));
-  E.forEach(([a,b,lbl,opt=''])=>{if(!lbl)return;const B=N[b],tl=(B.t=='s'||B.t=='e')?B.x:B.t=='d'?B.x+8:B.x;const ls=lbl.split('\n'),lh=12;
-   s+=`<text class="lb" text-anchor="end" font-size="10.5">`+ls.map((l,i)=>`<tspan x="${tl-8}" y="${B.cy-8-(ls.length-1-i)*lh}">${l}</tspan>`).join('')+`</text>`});
-  const svg=document.getElementById('svg-asis');svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('width',W);svg.setAttribute('height',H);svg.innerHTML=s;
-  const lanes=document.getElementById('lanes-asis');lanes.style.paddingTop=HB+'px';
-  LANES.forEach(l=>{const d=document.createElement('div');d.style.height=LH+'px';d.innerHTML=l[0]+(l[1]?`<small class="${l[2]}">${l[1]}</small>`:'');lanes.appendChild(d)});
-  lanes.firstChild.style.borderTop='0';
-  return {sx, SECS};
-}
-
-// ================= RENDER TO BE =================
-function buildToBe(){
-  const P=170,NW=130,NH=66,LH=150,HB=50,RT=[8,78];
-  const LANES=[["Servicios Clínicos","",""],["Abastecimiento y Compras","incluye Licitaciones","info"],["Gestión de Contratos","",""],["Proveedores y Despacho","",""],["Recepción y Bodegas","incluye Distribución y Paquetización","info"],["Sistemas y Registros","SASUR, Excel + Power Query y Semáforo de Stock","info"]];
-  const SECS=[["1","Programación",3],["2","Consolidación",3],["3","Adquisición",4],["4","Recepción",4],["5","Almacenamiento y control de stock",4],["6","Distribución, retiro y consumo",4],["7","Gestión preventiva de excedentes, vencimientos y mejora continua",5]];
-  let sx=[],x=10;SECS.forEach(s=>{sx.push(x);x+=s[2]*P+30});const W=x+10,H=HB+6*LH+26;
-  const N={};
-  function n(id,s,c,l,t,k,txt,r=0,w=1){const nx=sx[s]+15+c*P,ny=HB+l*LH+RT[r];let o={id,t,k,txt,w};
-   if(t=='d'){o.x=nx;o.y=HB+l*LH+RT[0]+NH/2-42;o.w2=NW;o.h=84}
-   else if(t=='s'||t=='e'){o.x=nx+NW/2-15;o.y=ny+NH/2-15;o.w2=30;o.h=30}
-   else{o.x=nx;o.y=ny;o.w2=w*P-40;o.h=NH}
-   o.cx=o.x+o.w2/2;o.cy=o.y+o.h/2;N[id]=o}
-  n('s1',0,0,0,'s','g','Inicio del ciclo mensual');n('p1',0,1,0,'a','gr','Servicios Clínicos y Compras programan según consumo histórico real por servicio');
-  n('pn',0,0,1,'n','gr','Indicador: % de ejecución vs. programado');n('p3',0,2,0,'doc','p','Requerimientos validados');
-  n('db1',0,1,5,'db','p','SASUR');n('dn',0,0,5,'n','p','Aporta histórico de consumo y resultado de la revisión de indicadores');
-  n('e0',1,0,5,'db','p','SASUR');n('e1',1,0,1,'a','g','Extracción estandarizada de reportes SASUR: stock, programación, licitaciones, ICP');
-  n('e2d',1,1,5,'db','p','Power Query');n('e2',1,1,1,'a','gr','Consolidado automatizado en Excel con Power Query (alternativa en evaluación)');
-  n('e2n',1,1,0,'n','gr','Elimina el cruce manual de ≈ 1 día completo',1);
-  n('e3d',1,2,5,'db','p','Semáforo');n('e3',1,2,1,'a','gr','Revisión del consolidado con semáforo de stock');
-  n('e3n',1,2,0,'n','o','Quiebres, sobre-stock y vencimientos visibles antes de comprar',1);
-  n('q1',2,0,1,'d','o','¿Qué mecanismo de compra corresponde?');n('qn',2,0,0,'n','g','Decisión coordinada: Compras, Licitaciones y Gestión de Contratos',1);
-  n('q2',2,1,1,'a','gr','CENABAST: seguimiento mensual de faltantes recurrentes (brecha ICP)');
-  n('q4',2,1,2,'a','gr','Convenio vigente: control anticipado de saldo y fechas de término');
-  n('q5',2,1,2,'a','gr','Nueva licitación: preparación anticipada por alerta, bases técnicas neutras',1);
-  n('qa',2,1,3,'n','o','Alerta de licitación (sistema)');
-  n('q6',2,2,1,'a','gr','Emisión de orden de compra y seguimiento activo al proveedor');n('q7',2,3,1,'doc','p','Orden de compra');
-  n('r1',3,0,3,'a','b','Proveedor o CENABAST despacha la mercadería');n('r2',3,1,4,'a','b','Recepción física verificada');
-  n('r3',3,2,5,'a','p','Registro digital en SASUR ligado a la recepción física');
-  n('rn',3,2,4,'n','gr','Mejora crítica: reduce el desfase de ≈ 48 h hasta 1 semana');
-  n('rk',3,3,4,'n','gr','Indicador: días entre recepción física y registro digital');
-  n('a1',4,0,4,'a','b','Ingreso sincronizado y distribución en las 27 bodegas');
-  n('a2',4,1,4,'a','gr','Control de niveles de stock y vencimientos por bodega');n('a2d',4,1,5,'db','p','SASUR');
-  n('a3',4,2,5,'a','o','Alertas automáticas por criticidad: quiebre, crítico, sobre-stock');
-  n('a4',4,3,4,'a','b','Traslados internos con trazabilidad: stock visible durante el movimiento');
-  n('t1',5,0,4,'a','o','Validación previa: flujo normal sin excedentes críticos');
-  n('t2',5,1,4,'a','b','Distribución y Paquetización entregan según necesidad validada');
-  n('t3',5,2,5,'a','p','Registro del retiro efectivo en SASUR');
-  n('tn',5,3,5,'n','gr','Trazabilidad: programado, entregado y consumo clínico efectivo',1);
-  n('t5',5,3,0,'e','gr','Consumo clínico efectivo');
-  n('d1',6,0,4,'d','o','¿Hay excedente o vencimiento próximo?');
-  n('n1',6,1,4,'a','b','Distribución normal según necesidad (Distribución y Paquetización)');
-  n('y1',6,1,4,'a','b','Protocolo formal: retorno de excedentes y redistribución interna antes de vencer',1);
-  n('yn',6,3,4,'n','gr','Reemplaza el canje informal y evita pérdidas por destrucción o vencimiento',1);
-  n('n2',6,2,0,'a','gr','Consumo clínico efectivo');n('v',6,2,5,'a','p','Revisión periódica de los 5 indicadores clave');
-  n('vn',6,3,5,'n','p','Indicadores: % ejecución vs. programado · tiempo de consolidación · días recepción–registro · % vencimientos · ocupación de bodegas',0,2);
-  const E=[['s1','p1'],['p1','p3'],['pn','p1','','dash'],['db1','p1','','dash up'],['dn','db1','','dash'],
-  ['p3','e1','Requerimientos\nbasados en\nconsumo histórico'],['e0','e1','','dash up'],['e1','e2'],['e2d','e2','','dash up'],['e2','e2n','','dash up'],['e2','e3'],['e3d','e3','','dash up'],['e3','e3n','','dash up'],
-  ['e3','q1','Consolidado\nautomatizado\ny validado'],['q1','q2','CENABAST'],['q1','q4','Convenio\nvigente'],['q1','q5','Nueva\nlicitación'],['q1','qn','','dash up'],['q2','q6'],['q4','q6','','near'],['q5','q6','','near'],['q5','qa','','dash b t'],['q6','q7'],
-  ['q7','r1','Orden de compra con\nseguimiento y despacho'],['r1','r2'],['r2','r3','Registro\ninmediato'],['r3','rn','','dash up'],['rn','rk','','dash'],['r3','a1','Ingreso físico verificado\ny registro sincronizado','near'],
-  ['a1','a2'],['a2d','a2','','dash up'],['a2','a3','','dash'],['a2','a4'],['a4','t1','Stock controlado\ncon alertas de\ncriticidad'],
-  ['t1','t2'],['t2','t3'],['t3','t5'],['t3','tn','','dash'],['t2','d1','Monitoreo de\nremanentes'],
-  ['d1','n1','No'],['d1','y1','Sí'],['n1','n2'],['y1','v'],['y1','yn','','dash'],['n2','v','','b t'],['v','vn','','dash'],
-  ['v','db1','Retroalimentación de los 5 indicadores hacia la Sección 1','dash fb']];
-
-  let s=`<defs><marker id="ar-tobe" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
-  SECS.forEach((q,i)=>{s+=`<rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${H}" fill="${i%2?'var(--band)':'var(--bg)'}" opacity="${i%2?.55:1}"/><rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${HB-6}" fill="var(--band2)"/><text class="hd" x="${sx[i]+12}" y="${(HB-6)/2}" dominant-baseline="central">${q[0]} · ${q[1].toUpperCase()}</text>`});
-  for(let l=0;l<=6;l++)s+=`<line x1="0" x2="${W}" y1="${HB+l*LH}" y2="${HB+l*LH}" stroke="var(--line)"/>`;
-  const L=o=>o.x,Rg=o=>o.x+o.w2;
-  E.forEach(([a,b,lbl,opt=''])=>{const A=N[a],B=N[b],f=opt.split(' ');let p;
-   if(f.includes('fb'))p=[[A.cx,A.y+A.h],[A.cx,H-10],[B.cx,H-10],[B.cx,B.y+B.h]];
-   else if(f.includes('up'))p=[[A.cx,A.y],[A.cx,B.y+B.h]];
-   else if(f.includes('b')&&f.includes('t'))p=[[A.cx,A.y+A.h],[A.cx,B.y]];
-   else if(f.includes('b')&&f.includes('l'))p=[[A.cx,A.y+A.h],[A.cx,B.cy],[L(B),B.cy]];
-   else if(f.includes('u'))p=[[A.cx,A.y],[A.cx,B.cy],[L(B),B.cy]];
-   else{const sr=Rg(A),tl=L(B);let xm=(sr+tl)/2;if(f.includes('near'))xm=tl-14;if(f.includes('xs'))xm=sr+20;
-    p=A.cy==B.cy?[[sr,A.cy],[tl,B.cy]]:[[sr,A.cy],[xm,A.cy],[xm,B.cy],[tl,B.cy]]}
-   s+=`<polyline class="e ${f.includes('dash')?'dash':''}" points="${p.map(q=>q.join(',')).join(' ')}" marker-end="url(#ar-tobe)"/>`;
-  });
-  const sh=(o)=>{const c='k-'+o.k,{x,y,w2:w,h}=o;
-   if(o.t=='a')return `<rect class="${c} sh" x="${x}" y="${y}" width="${w}" height="${h}" rx="7"/>`+svgTxt(wrapText(o.txt,22),o.cx,o.cy,10.5);
-   if(o.t=='n')return `<rect class="${c} nt" x="${x}" y="${y}" width="${w}" height="${h}" rx="7" fill-opacity=".6"/>`+svgTxt(wrapText(o.txt,w>200?50:22),o.cx,o.cy,10,'font-style="italic"');
-   if(o.t=='d')return `<polygon class="${c} sh" points="${o.cx},${y} ${x+w},${o.cy} ${o.cx},${y+h} ${x},${o.cy}"/>`+svgTxt(wrapText(o.txt,17),o.cx,o.cy,9.5);
-   if(o.t=='doc')return `<path class="${c} sh" d="M${x},${y} h${w} v${h-9} c${-w*.25},-10 ${-w*.25},10 ${-w*.5},0 s${-w*.25},10 ${-w*.5},0 z"/>`+svgTxt(wrapText(o.txt,22),o.cx,o.cy-3,10.5);
-   if(o.t=='db'){const bw=100,bx=x+(w-bw)/2;return `<path class="${c} sh" d="M${bx},${y+9} a50,9 0 0 1 ${bw},0 v${h-18} a50,9 0 0 1 ${-bw},0 z"/><path class="${c} sh" fill="none" d="M${bx},${y+9} a50,9 0 0 0 ${bw},0"/>`+svgTxt([o.txt],o.cx,o.cy+4,11,'font-weight="700"')}
-   if(o.t=='s'||o.t=='e')return `<circle class="${c}" cx="${o.cx}" cy="${o.cy}" r="15" stroke-width="${o.t=='e'?3.5:1.5}"/>`+svgTxt(wrapText(o.txt,22),o.cx,o.cy+34,10);
-   return''};
-  Object.values(N).forEach(o=>s+=sh(o));
-  E.forEach(([a,b,lbl,opt=''])=>{if(!lbl)return;if(opt.split(' ').includes('fb')){s+=`<text class="lb" font-size="11" x="${N[b].cx+16}" y="${H-16}">${lbl}</text>`;return}const B=N[b],tl=(B.t=='s'||B.t=='e')?B.x:B.t=='d'?B.x+8:B.x;const ls=lbl.split('\n'),lh=12;
-   s+=`<text class="lb" text-anchor="end" font-size="10.5">`+ls.map((l,i)=>`<tspan x="${tl-8}" y="${B.cy-8-(ls.length-1-i)*lh}">${l}</tspan>`).join('')+`</text>`});
-  const svg=document.getElementById('svg-tobe');svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('width',W);svg.setAttribute('height',H);svg.innerHTML=s;
-  const lanes=document.getElementById('lanes-tobe');lanes.style.paddingTop=HB+'px';
-  LANES.forEach(l=>{const d=document.createElement('div');d.style.height=LH+'px';d.innerHTML=l[0]+(l[1]?`<small class="${l[2]}">${l[1]}</small>`:'');lanes.appendChild(d)});
-  lanes.firstChild.style.borderTop='0';
-  return {sx, SECS};
-}
-
-const asIsData = buildAsIs();
-const toBeData = buildToBe();
-
-// ================= NAVEGACIÓN Y MODOS =================
-const nav=document.getElementById('nav');
-const wrapAsIs=document.getElementById('wrap-asis');
-const wrapToBe=document.getElementById('wrap-tobe');
-
-asIsData.SECS.forEach((q,i)=>{
-  const b=document.createElement('button');
-  b.className='sec-btn';
-  b.textContent=q[0]+' · '+q[1];
-  b.onclick=()=>{
-    wrapAsIs.scrollTo({left:asIsData.sx[i]-6,behavior:'smooth'});
-    wrapToBe.scrollTo({left:toBeData.sx[i]-6,behavior:'smooth'});
-  };
-  nav.appendChild(b);
+const P=170,NW=130,NH=66,LH=150,HB=50,RT=[8,78];
+const LANES=[["Servicios Clínicos",""],["Abastecimiento y Compras","incluye Licitaciones"],["Gestión de Contratos",""],["Proveedores y Despacho",""],["Recepción y Bodegas","incluye Distribución y Paquetización"],["Sistemas y Registros","SASUR, Excel + Power Query y Semáforo de Stock"]];
+const SECS=[["1","Programación",3],["2","Consolidación",3],["3","Adquisición",4],["4","Recepción",4],["5","Almacenamiento y control de stock",4],["6","Distribución, retiro y consumo",4],["7","Gestión preventiva de excedentes, vencimientos y mejora continua",5]];
+let sx=[],x=10;SECS.forEach(s=>{sx.push(x);x+=s[2]*P+30});const W=x+10,H=HB+6*LH+26;
+const N={};
+function n(id,s,c,l,t,k,txt,r=0,w=1){const nx=sx[s]+15+c*P,ny=HB+l*LH+RT[r];let o={id,t,k,txt,w};
+ if(t=='d'){o.x=nx;o.y=HB+l*LH+RT[0]+NH/2-42;o.w2=NW;o.h=84}
+ else if(t=='s'||t=='e'){o.x=nx+NW/2-15;o.y=ny+NH/2-15;o.w2=30;o.h=30}
+ else{o.x=nx;o.y=ny;o.w2=w*P-40;o.h=NH}
+ o.cx=o.x+o.w2/2;o.cy=o.y+o.h/2;N[id]=o}
+// S1
+n('s1',0,0,0,'s','g','Inicio del ciclo mensual');n('p1',0,1,0,'a','gr','Servicios Clínicos y Compras programan según consumo histórico real por servicio');
+n('pn',0,0,1,'n','gr','Indicador: % de ejecución vs. programado');n('p3',0,2,0,'doc','p','Requerimientos validados');
+n('db1',0,1,5,'db','p','SASUR');n('dn',0,0,5,'n','p','Aporta histórico de consumo y resultado de la revisión de indicadores');
+// S2
+n('e0',1,0,5,'db','p','SASUR');n('e1',1,0,1,'a','g','Extracción estandarizada de reportes SASUR: stock, programación, licitaciones, ICP');
+n('e2d',1,1,5,'db','p','Power Query');n('e2',1,1,1,'a','gr','Consolidado automatizado en Excel con Power Query (alternativa en evaluación)');
+n('e2n',1,1,0,'n','gr','Elimina el cruce manual de ≈ 1 día completo',1);
+n('e3d',1,2,5,'db','p','Semáforo');n('e3',1,2,1,'a','gr','Revisión del consolidado con semáforo de stock');
+n('e3n',1,2,0,'n','o','Quiebres, sobre-stock y vencimientos visibles antes de comprar',1);
+// S3
+n('q1',2,0,1,'d','o','¿Qué mecanismo de compra corresponde?');n('qn',2,0,0,'n','g','Decisión coordinada: Compras, Licitaciones y Gestión de Contratos',1);
+n('q2',2,1,1,'a','gr','CENABAST: seguimiento mensual de faltantes recurrentes (brecha ICP)');
+n('q4',2,1,2,'a','gr','Convenio vigente: control anticipado de saldo y fechas de término');
+n('q5',2,1,2,'a','gr','Nueva licitación: preparación anticipada por alerta, bases técnicas neutras',1);
+n('qa',2,1,3,'n','o','Alerta de licitación (sistema)');
+n('q6',2,2,1,'a','gr','Emisión de orden de compra y seguimiento activo al proveedor');n('q7',2,3,1,'doc','p','Orden de compra');
+// S4
+n('r1',3,0,3,'a','b','Proveedor o CENABAST despacha la mercadería');n('r2',3,1,4,'a','b','Recepción física verificada');
+n('r3',3,2,5,'a','p','Registro digital en SASUR ligado a la recepción física');
+n('rn',3,2,4,'n','gr','Mejora crítica: reduce el desfase de ≈ 48 h hasta 1 semana');
+n('rk',3,3,4,'n','gr','Indicador: días entre recepción física y registro digital');
+// S5
+n('a1',4,0,4,'a','b','Ingreso sincronizado y distribución en las 27 bodegas');
+n('a2',4,1,4,'a','gr','Control de niveles de stock y vencimientos por bodega');n('a2d',4,1,5,'db','p','SASUR');
+n('a3',4,2,5,'a','o','Alertas automáticas por criticidad: quiebre, crítico, sobre-stock');
+n('a4',4,3,4,'a','b','Traslados internos con trazabilidad: stock visible durante el movimiento');
+// S6
+n('t1',5,0,4,'a','o','Validación previa: flujo normal sin excedentes críticos');
+n('t2',5,1,4,'a','b','Distribución y Paquetización entregan según necesidad validada');
+n('t3',5,2,5,'a','p','Registro del retiro efectivo en SASUR');
+n('tn',5,3,5,'n','gr','Trazabilidad: programado, entregado y consumo clínico efectivo',1);
+n('t5',5,3,0,'e','gr','Consumo clínico efectivo');
+// S7
+n('d1',6,0,4,'d','o','¿Hay excedente o vencimiento próximo?');
+n('n1',6,1,4,'a','b','Distribución normal según necesidad (Distribución y Paquetización)');
+n('y1',6,1,4,'a','b','Protocolo formal: retorno de excedentes y redistribución interna antes de vencer',1);
+n('yn',6,3,4,'n','gr','Reemplaza el canje informal y evita pérdidas por destrucción o vencimiento',1);
+n('n2',6,2,0,'a','gr','Consumo clínico efectivo');n('v',6,2,5,'a','p','Revisión periódica de los 5 indicadores clave');
+n('vn',6,3,5,'n','p','Indicadores: % ejecución vs. programado · tiempo de consolidación · días recepción–registro · % vencimientos · ocupación de bodegas',0,2);
+const E=[['s1','p1'],['p1','p3'],['pn','p1','','dash'],['db1','p1','','dash up'],['dn','db1','','dash'],
+['p3','e1','Requerimientos\nbasados en\nconsumo histórico'],['e0','e1','','dash up'],['e1','e2'],['e2d','e2','','dash up'],['e2','e2n','','dash up'],['e2','e3'],['e3d','e3','','dash up'],['e3','e3n','','dash up'],
+['e3','q1','Consolidado\nautomatizado\ny validado'],['q1','q2','CENABAST','bx1'],['q1','q4','Convenio\nvigente','bx2'],['q1','q5','Nueva\nlicitación','bx3'],['q1','qn','','dash up'],['q2','q6'],['q4','q6','','near'],['q5','q6','','near'],['q5','qa','','dash b t'],['q6','q7'],
+['q7','r1','Orden de compra con\nseguimiento y despacho'],['r1','r2'],['r2','r3','Registro\ninmediato'],['r3','rn','','dash up'],['rn','rk','','dash'],['r3','a1','Ingreso físico verificado\ny registro sincronizado','near'],
+['a1','a2'],['a2d','a2','','dash up'],['a2','a3','','dash'],['a2','a4'],['a4','t1','Stock controlado\ncon alertas de\ncriticidad'],
+['t1','t2'],['t2','t3'],['t3','t5'],['t3','tn','','dash'],['t2','d1','Monitoreo de\nremanentes'],
+['d1','n1','No'],['d1','y1','Sí'],['n1','n2'],['y1','v'],['y1','yn','','dash'],['n2','v','','b t'],['v','vn','','dash'],
+['v','db1','Retroalimentación de los 5 indicadores hacia la Sección 1','dash fb']];
+const wrap=(t,m)=>{const out=[];let c='';t.split(' ').forEach(w=>{if((c+' '+w).trim().length>m&&c){out.push(c);c=w}else c=(c+' '+w).trim()});if(c)out.push(c);return out};
+const txt=(lines,cx,cy,fs,extra='')=>{const lh=fs+2.5,y0=cy-(lines.length-1)*lh/2;return `<text text-anchor="middle" font-size="${fs}" ${extra}>`+lines.map((l,i)=>`<tspan x="${cx}" y="${y0+i*lh}" dominant-baseline="central">${l}</tspan>`).join('')+'</text>'};
+let s=`<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
+SECS.forEach((q,i)=>{s+=`<rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${H}" fill="${i%2?'var(--band)':'var(--bg)'}" opacity="${i%2?.55:1}"/><rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${HB-6}" fill="var(--band2)"/><text class="hd" x="${sx[i]+12}" y="${(HB-6)/2}" dominant-baseline="central">${q[0]} · ${q[1].toUpperCase()}</text>`});
+for(let l=0;l<=6;l++)s+=`<line x1="0" x2="${W}" y1="${HB+l*LH}" y2="${HB+l*LH}" stroke="var(--line)"/>`;
+const L=o=>o.x,Rg=o=>o.x+o.w2;
+E.forEach(([a,b,lbl,opt=''])=>{const A=N[a],B=N[b],f=opt.split(' ');let p;
+ if(f.includes('fb'))p=[[A.cx,A.y+A.h],[A.cx,H-10],[B.cx,H-10],[B.cx,B.y+B.h]];
+ else if(f.includes('up'))p=[[A.cx,A.y],[A.cx,B.y+B.h]];
+ else if(f.includes('b')&&f.includes('t'))p=[[A.cx,A.y+A.h],[A.cx,B.y]];
+ else if(f.includes('b')&&f.includes('l'))p=[[A.cx,A.y+A.h],[A.cx,B.cy],[L(B),B.cy]];
+ else if(f.includes('u'))p=[[A.cx,A.y],[A.cx,B.cy],[L(B),B.cy]];
+ else{const sr=Rg(A),tl=L(B);let xm=(sr+tl)/2;if(f.includes('near'))xm=tl-14;if(f.includes('xs'))xm=sr+20;
+  if(f.includes('bx1'))xm=sr+18;
+  if(f.includes('bx2'))xm=sr+38;
+  if(f.includes('bx3'))xm=sr+58;
+  p=A.cy==B.cy?[[sr,A.cy],[tl,B.cy]]:[[sr,A.cy],[xm,A.cy],[xm,B.cy],[tl,B.cy]]}
+ s+=`<polyline class="e ${f.includes('dash')?'dash':''}" points="${p.map(q=>q.join(',')).join(' ')}" marker-end="url(#ar)"/>`;
 });
-
-// Sincronizar scroll en modo Comparar
-let isSyncingLeft = false;
-let isSyncingRight = false;
-wrapAsIs.addEventListener('scroll', function() {
-  if (!document.body.classList.contains('mode-both')) return;
-  if (!isSyncingLeft) {
-    isSyncingRight = true;
-    wrapToBe.scrollLeft = this.scrollLeft;
-    wrapToBe.scrollTop = this.scrollTop;
-  }
-  isSyncingLeft = false;
-});
-wrapToBe.addEventListener('scroll', function() {
-  if (!document.body.classList.contains('mode-both')) return;
-  if (!isSyncingRight) {
-    isSyncingLeft = true;
-    wrapAsIs.scrollLeft = this.scrollLeft;
-    wrapAsIs.scrollTop = this.scrollTop;
-  }
-  isSyncingRight = false;
-});
-
-function setMode(m){
-  document.body.classList.toggle('mode-both', m==='both');
-  document.getElementById('btn-asis').classList.toggle('active', m==='asis');
-  document.getElementById('btn-tobe').classList.toggle('active', m==='tobe');
-  document.getElementById('btn-both').classList.toggle('active', m==='both');
-  document.getElementById('sec-asis').classList.toggle('hidden', m==='tobe');
-  document.getElementById('sec-tobe').classList.toggle('hidden', m==='asis');
-
-  const title = document.getElementById('main-title');
-  if(m==='asis') title.textContent = 'AS IS — Cadena de abastecimiento e inventario del Hospital de Villarrica';
-  else if(m==='tobe') title.textContent = 'TO BE — Cadena de abastecimiento e inventario del Hospital de Villarrica';
-  else title.textContent = 'AS IS vs. TO BE — Cadena de abastecimiento e inventario del Hospital de Villarrica';
-}
-
-setMode('both');
-</script>
-</body></html>
+const sh=(o)=>{const c='k-'+o.k,{x,y,w2:w,h}=o;
+ if(o.t=='a')return `<rect class="${c} sh" x="${x}" y="${y}" width="${w}" height="${h}" rx="7"/>`+txt(wrap(o.txt,22),o.cx,o.cy,10.5);
+ if(o.t=='n')return `<rect class="${c} nt" x="${x}" y="${y}" width="${w}" height="${h}" rx="7" fill-opacity=".6"/>`+txt(wrap(o.txt,w>200?50:22),o.cx,o.cy,10,'font-style="italic"');
+ if(o.t=='d')return `<polygon class="${c} sh" points="${o.cx},${y} ${x+w},${o.cy} ${o.cx},${y+h} ${x},${o.cy}"/>`+txt(wrap(o.txt,17),o.cx,o.cy,9.5);
+ if(o.t=='doc')return `<path class="${c} sh" d="M${x},${y} h${w} v${h-9} c${-w*.25},-10 ${-w*.25},10 ${-w*.5},0 s${-w*.25},10 ${-w*.5},0 z"/>`+txt(wrap(o.txt,22),o.cx,o.cy-3,10.5);
+ if(o.t=='db'){const bw=100,bx=x+(w-bw)/2;return `<path class="${c} sh" d="M${bx},${y+9} a50,9 0 0 1 ${bw},0 v${h-18} a50,9 0 0 1 ${-bw},0 z"/><path class="${c} sh" fill="none" d="M${bx},${y+9} a50,9 0 0 0 ${bw},0"/>`+txt([o.txt],o.cx,o.cy+4,11,'font-weight="700"')}
+ if(o.t=='s'||o.t=='e')return `<circle class="${c}" cx="${o.cx}" cy="${o.cy}" r="15" stroke-width="${o.t=='e'?3.5:1.5}"/>`+txt(wrap(o.txt,22),o.cx,o.cy+34,10);
+ return''};
+Object.values(N).forEach(o=>s+=sh(o));
+E.forEach(([a,b,lbl,opt=''])=>{if(!lbl)return;if(opt.split(' ').includes('fb')){s+=`<text class="lb" font-size="11" x="${N[b].cx+16}" y="${H-16}">${lbl}</text>`;return}const B=N[b],tl=(B.t=='s'||B.t=='e')?B.x:B.t=='d'?B.x+8:B.x;const ls=lbl.split('\n'),lh=12;
+ s+=`<text class="lb" text-anchor="end" font-size="10.5">`+ls.map((l,i)=>`<tspan x="${tl-8}" y="${B.cy-8-(ls.length-1-i)*lh}">${l}</tspan>`).join('')+`</text>`});
+const svg=document.getElementById('svg');svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('width',W);svg.setAttribute('height',H);svg.innerHTML=s;
+const lanes=document.getElementById('lanes');lanes.style.paddingTop=HB+'px';
+LANES.forEach(l=>{const d=document.createElement('div');d.style.height=LH+'px';d.innerHTML=l[0]+(l[1]?`<small>${l[1]}</small>`:'');lanes.appendChild(d)});
+lanes.firstChild.style.borderTop='0';
+const nav=document.getElementById('nav'),wrapEl=document.getElementById('wrap');
+SECS.forEach((q,i)=>{const b=document.createElement('button');b.textContent=q[0]+' · '+q[1];b.onclick=()=>wrapEl.scrollTo({left:sx[i]-6,behavior:'smooth'});nav.appendChild(b)});
+</script></body></html>
