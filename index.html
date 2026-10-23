@@ -111,8 +111,8 @@ function buildAsIs(){
   const SECS=[["1","Programación",3],["2","Consolidación",3],["3","Adquisición",4],["4","Recepción",4],["5","Almacenamiento",5],["6","Retiro y consumo",5],["7","Vencimientos y destino final",7]];
   let sx=[],x=10;SECS.forEach(s=>{sx.push(x);x+=s[2]*P+30});const W=x+10,H=HB+6*LH;
   const N={};
-  function n(id,s,c,l,t,k,txt,r=0,w=1){const nx=sx[s]+15+c*P,ny=HB+l*LH+RT[r];let o={id,t,k,txt,w};
-   if(t=='d'){o.x=nx;o.y=HB+l*LH+RT[0]-12;o.w2=NW;o.h=84}
+  function n(id,s,c,l,t,k,txt,r=0,w=1,dy=0){const nx=sx[s]+15+c*P,ny=HB+l*LH+RT[r];let o={id,t,k,txt,w};
+   if(t=='d'){o.x=nx;o.y=HB+l*LH+RT[0]-12+dy;o.w2=NW;o.h=84}
    else if(t=='s'||t=='e'){o.x=nx+NW/2-15;o.y=ny+30-15;o.w2=30;o.h=30}
    else{o.x=nx;o.y=ny;o.w2=w*P-40;o.h=NH}
    o.cx=o.x+o.w2/2;o.cy=o.y+o.h/2;N[id]=o}
@@ -122,7 +122,7 @@ function buildAsIs(){
   n('c0',1,0,5,'db','p','SASUR');n('c1',1,0,1,'a','g','Descargan reportes de SASUR: stock, programación, licitaciones, ICP');
   n('c3',1,1,5,'doc','p','Planilla Excel');n('c2',1,1,1,'a','p','Cruzan manualmente los reportes en Excel');
   n('c4',1,2,1,'doc','p','Consolidado de compras');n('c5',1,1,1,'n','o','Sin integración automática entre reportes. Preparar la información toma ≈ 1 día completo',1,2);
-  n('q1',2,0,1,'d','a','¿Qué canal de abastecimiento corresponde?');n('q2',2,1,1,'a','g','Revisa informe ICP mensual de CENABAST');
+  n('q1',2,0,1,'d','a','¿Qué canal de abastecimiento corresponde?',0,1,60);n('q2',2,1,1,'a','g','Revisa informe ICP mensual de CENABAST');
   n('q3',2,1,1,'n','o','Cumplimiento informado ≈ 71 %',1);n('q4',2,1,2,'a','g','Revisa saldo del convenio vigente · Por validar');
   n('q5',2,1,2,'a','g','Prepara bases técnicas neutras (nueva licitación) · Por validar',1);n('q6',2,2,1,'a','g','Emite orden de compra contra el saldo disponible',1);
   n('q7',2,3,1,'doc','p','Orden de compra');
@@ -143,48 +143,23 @@ function buildAsIs(){
   n('u7',6,5,4,'a','b','Canje informal vía WhatsApp con la red hospitalaria');n('u8',6,5,4,'a','r','Destrucción certificada',1);
   n('u9',6,6,4,'e','gr','Eventual canje exitoso');n('u10',6,6,4,'e','r','Pérdida por vencimiento / destrucción',1);
   const E=[['p3','c1','Requerimientos'],['s1','p1'],['p1','p3'],['p1','p2','','dash b t'],['c0','c1','','dash t b'],['c1','c2'],['c3','c2','','dash t b'],['c2','c4'],['c2','c5','','dash b t'],
-  ['c4','q1','Consolidado\nde compras'],
-  ['q1','q2','CENABAST','from-right top'],['q1','q4','Convenio\nvigente','from-bottom mid'],['q1','q5','Nueva licitación\nsin cartera','from-bottom low'],
-  ['q2','q3','','dash b t'],['q2','q7'],['q4','q6','Si hay saldo\ndisponible'],['q6','q7','','near'],['q5','q7','','near'],
-  ['q7','r1','Orden de compra\ny despacho'],['r1','r2'],['r2','r3'],
-  ['r3','r4','No','from-right top'],['r3','a1','Sí · producto recibido\ny registro de ingreso','from-bottom bot'],
-  ['r4','a1','','near'],['r2','r5','','dash b t'],
-  ['a1','a2'],['a2','a3'],['a2','a2n','','dash b t'],
-  ['a3','a4','Sí','from-right top'],['a3','a5','No','from-bottom bot'],
-  ['a4','a5'],['a4','a4n','','dash b t'],
-  ['a5','t1','Stock\ndisponible'],['t1','t2'],['t2','t3','','dash'],['t2','t5','','near'],
-  ['t5','t6','Sí','from-right top'],['t5','t7','No','from-bottom bot'],
-  ['t7','u1','Existencias remanentes\nsin consumir'],['u1','u2'],['u2','u3'],
-  ['u3','u4','Sí','from-right top'],['u3','u5','No','from-bottom bot'],
-  ['u5','u6'],
-  ['u6','u7','Sí\n(por validar)','from-right top'],['u6','u8','No','from-bottom bot'],
-  ['u7','u9'],['u8','u10']];
+  ['c4','q1',''],['q1','q2','CENABAST','u'],['q1','q4','Convenio\nvigente'],['q1','q5','Nueva licitación\nsin cartera','b l'],['q2','q3','','dash b t'],['q2','q7'],['q4','q6','Si hay saldo\ndisponible'],['q6','q7','','near'],['q5','q7','','near'],
+  ['q7','r1','Orden de compra\ny despacho'],['r1','r2'],['r2','r3'],['r3','r4','No','b l'],['r3','a1','Sí · producto recibido\ny registro de ingreso','near'],['r4','a1','','near'],['r2','r5','','dash b t'],
+  ['a1','a2'],['a2','a3'],['a2','a2n','','dash b t'],['a3','a4','Sí','b l'],['a3','a5','No'],['a4','a5'],['a4','a4n','','dash b t'],
+  ['a5','t1','Stock\ndisponible'],['t1','t2'],['t2','t3','','dash'],['t2','t5','','near'],['t5','t6','Sí'],['t5','t7','No','b l'],
+  ['t7','u1','Existencias remanentes\nsin consumir'],['u1','u2'],['u2','u3'],['u3','u4','Sí','u'],['u3','u5','No'],['u5','u6'],['u6','u7','Sí\n(por validar)'],['u6','u8','No','b l'],['u7','u9'],['u8','u10']];
 
   let s=`<defs><marker id="ar-asis" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
   SECS.forEach((q,i)=>{s+=`<rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${H}" fill="${i%2?'var(--band)':'var(--bg)'}" opacity="${i%2?.55:1}"/><rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${HB-6}" fill="var(--band2)"/><text class="hd" x="${sx[i]+12}" y="${(HB-6)/2}" dominant-baseline="central">${q[0]} · ${q[1].toUpperCase()}</text>`});
   for(let l=0;l<=6;l++)s+=`<line x1="0" x2="${W}" y1="${HB+l*LH}" y2="${HB+l*LH}" stroke="var(--line)"/>`;
   const L=o=>o.x,Rg=o=>o.x+o.w2;
   E.forEach(([a,b,lbl,opt=''])=>{const A=N[a],B=N[b],f=opt.split(' ');let p;
-   if(f.includes('fb'))p=[[A.cx,A.y+A.h],[A.cx,H-10],[B.cx,H-10],[B.cx,B.y+B.h]];
-   else if(f.includes('up'))p=[[A.cx,A.y],[A.cx,B.y+B.h]];
-   else if(f.includes('b')&&f.includes('t'))p=[[A.cx,A.y+A.h],[A.cx,B.y]];
+   if(f.includes('b')&&f.includes('t'))p=[[A.cx,A.y+A.h],[A.cx,B.y]];
    else if(f.includes('t')&&f.includes('b'))p=[[A.cx,A.y],[A.cx,B.y+B.h]];
    else if(f.includes('b')&&f.includes('l'))p=[[A.cx,A.y+A.h],[A.cx,B.cy],[L(B),B.cy]];
-   else{
-    const tl=L(B);
-    let startX = Rg(A), startY = A.cy;
-    if(A.t === 'd' && f.includes('from-right')) { startX = Rg(A); startY = A.y + A.h * 0.3; }
-    else if(A.t === 'd' && f.includes('from-bottom')) { startX = A.cx; startY = A.y + A.h; }
-    
-    let xm = (startX + tl) / 2;
-    if(f.includes('near')) xm = tl - 14;
-    if(f.includes('xs')) xm = startX + 20;
-
-    if(f.includes('top')) p=[[startX, startY],[xm, startY],[xm, B.cy],[tl, B.cy]];
-    else if(f.includes('mid')) p=[[startX, startY],[xm, startY],[xm, B.cy],[tl, B.cy]];
-    else if(f.includes('low') || f.includes('bot')) p=[[startX, startY],[xm, startY],[xm, B.cy],[tl, B.cy]];
-    else p=A.cy==B.cy?[[startX,startY],[tl,B.cy]]:[[startX,startY],[xm,startY],[xm,B.cy],[tl,B.cy]];
-   }
+   else if(f.includes('u'))p=[[A.cx,A.y],[A.cx,B.cy],[L(B),B.cy]];
+   else{const sr=Rg(A),tl=L(B);let xm=(sr+tl)/2;if(f.includes('near'))xm=tl-14;if(f.includes('xs'))xm=sr+20;
+    p=A.cy==B.cy?[[sr,A.cy],[tl,B.cy]]:[[sr,A.cy],[xm,A.cy],[xm,B.cy],[tl,B.cy]]}
    s+=`<polyline class="e ${f.includes('dash')?'dash':''}" points="${p.map(q=>q.join(',')).join(' ')}" marker-end="url(#ar-asis)"/>`;
   });
   const sh=(o)=>{const c='k-'+o.k,{x,y,w2:w,h}=o;
@@ -252,17 +227,11 @@ function buildToBe(){
   n('vn',6,3,5,'n','p','Indicadores: % ejecución vs. programado · tiempo de consolidación · días recepción–registro · % vencimientos · ocupación de bodegas',0,2);
   const E=[['s1','p1'],['p1','p3'],['pn','p1','','dash'],['db1','p1','','dash up'],['dn','db1','','dash'],
   ['p3','e1','Requerimientos\nbasados en\nconsumo histórico'],['e0','e1','','dash up'],['e1','e2'],['e2d','e2','','dash up'],['e2','e2n','','dash up'],['e2','e3'],['e3d','e3','','dash up'],['e3','e3n','','dash up'],
-  ['e3','q1','Consolidado\nautomatizado\ny validado'],
-  ['q1','q2','CENABAST','from-right top'],
-  ['q1','q4','Convenio\nvigente','from-bottom mid'],
-  ['q1','q5','Nueva\nlicitación','from-bottom low'],
-  ['q1','qn','','dash up'],['q2','q6'],['q4','q6','','near'],['q5','q6','','near'],['q5','qa','','dash b t'],['q6','q7'],
+  ['e3','q1','Consolidado\nautomatizado\ny validado'],['q1','q2','CENABAST'],['q1','q4','Convenio\nvigente'],['q1','q5','Nueva\nlicitación'],['q1','qn','','dash up'],['q2','q6'],['q4','q6','','near'],['q5','q6','','near'],['q5','qa','','dash b t'],['q6','q7'],
   ['q7','r1','Orden de compra con\nseguimiento y despacho'],['r1','r2'],['r2','r3','Registro\ninmediato'],['r3','rn','','dash up'],['rn','rk','','dash'],['r3','a1','Ingreso físico verificado\ny registro sincronizado','near'],
   ['a1','a2'],['a2d','a2','','dash up'],['a2','a3','','dash'],['a2','a4'],['a4','t1','Stock controlado\ncon alertas de\ncriticidad'],
   ['t1','t2'],['t2','t3'],['t3','t5'],['t3','tn','','dash'],['t2','d1','Monitoreo de\nremanentes'],
-  ['d1','n1','No','from-right top'],
-  ['d1','y1','Sí','from-bottom bot'],
-  ['n1','n2'],['y1','v'],['y1','yn','','dash'],['n2','v','','b t'],['v','vn','','dash'],
+  ['d1','n1','No'],['d1','y1','Sí'],['n1','n2'],['y1','v'],['y1','yn','','dash'],['n2','v','','b t'],['v','vn','','dash'],
   ['v','db1','Retroalimentación de los 5 indicadores hacia la Sección 1','dash fb']];
 
   let s=`<defs><marker id="ar-tobe" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
@@ -273,23 +242,10 @@ function buildToBe(){
    if(f.includes('fb'))p=[[A.cx,A.y+A.h],[A.cx,H-10],[B.cx,H-10],[B.cx,B.y+B.h]];
    else if(f.includes('up'))p=[[A.cx,A.y],[A.cx,B.y+B.h]];
    else if(f.includes('b')&&f.includes('t'))p=[[A.cx,A.y+A.h],[A.cx,B.y]];
-   else if(f.includes('t')&&f.includes('b'))p=[[A.cx,A.y],[A.cx,B.y+B.h]];
    else if(f.includes('b')&&f.includes('l'))p=[[A.cx,A.y+A.h],[A.cx,B.cy],[L(B),B.cy]];
-   else{
-    const tl=L(B);
-    let startX = Rg(A), startY = A.cy;
-    if(A.t === 'd' && f.includes('from-right')) { startX = Rg(A); startY = A.y + A.h * 0.3; }
-    else if(A.t === 'd' && f.includes('from-bottom')) { startX = A.cx; startY = A.y + A.h; }
-    
-    let xm = (startX + tl) / 2;
-    if(f.includes('near')) xm = tl - 14;
-    if(f.includes('xs')) xm = startX + 20;
-
-    if(f.includes('top')) p=[[startX, startY],[xm, startY],[xm, B.cy],[tl, B.cy]];
-    else if(f.includes('mid')) p=[[startX, startY],[xm, startY],[xm, B.cy],[tl, B.cy]];
-    else if(f.includes('low') || f.includes('bot')) p=[[startX, startY],[xm, startY],[xm, B.cy],[tl, B.cy]];
-    else p=A.cy==B.cy?[[startX,startY],[tl,B.cy]]:[[startX,startY],[xm,startY],[xm,B.cy],[tl,B.cy]];
-   }
+   else if(f.includes('u'))p=[[A.cx,A.y],[A.cx,B.cy],[L(B),B.cy]];
+   else{const sr=Rg(A),tl=L(B);let xm=(sr+tl)/2;if(f.includes('near'))xm=tl-14;if(f.includes('xs'))xm=sr+20;
+    p=A.cy==B.cy?[[sr,A.cy],[tl,B.cy]]:[[sr,A.cy],[xm,A.cy],[xm,B.cy],[tl,B.cy]]}
    s+=`<polyline class="e ${f.includes('dash')?'dash':''}" points="${p.map(q=>q.join(',')).join(' ')}" marker-end="url(#ar-tobe)"/>`;
   });
   const sh=(o)=>{const c='k-'+o.k,{x,y,w2:w,h}=o;
@@ -329,7 +285,7 @@ asIsData.SECS.forEach((q,i)=>{
   nav.appendChild(b);
 });
 
-// Sincronizar scroll en modo Comparار
+// Sincronizar scroll en modo Comparar
 let isSyncingLeft = false;
 let isSyncingRight = false;
 wrapAsIs.addEventListener('scroll', function() {
