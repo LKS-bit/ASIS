@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <title>AS IS vs. TO BE — Cadena de abastecimiento e inventario del Hospital de Villarrica</title>
 <style>
 :root{--bg:#fbfaf7;--ink:#26261f;--muted:#6f6e66;--line:#d9d7cd;--band:#f1efe8;--band2:#e9e6dc;
@@ -44,6 +45,39 @@ svg text{font-family:inherit;fill:var(--ink)}
 .lb{font-size:10.5px;font-weight:600;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round}
 .hd{font-size:13px;font-weight:700}
 .hidden{display:none !important}
+
+/* ===== MEJORAS VISUALES ===== */
+:root{--r:14px;--shadow:0 1px 2px rgba(20,20,10,.06),0 6px 20px rgba(20,20,10,.07);--chip:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.35);--chip:#2a2a24}}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;-webkit-font-smoothing:antialiased;padding-bottom:24px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;padding:14px 22px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.h-title h1{font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.25}
+.h-title p{font-size:12.5px;margin-top:3px}
+.mode-switch{padding:4px;border-radius:12px;background:var(--band2)}
+.mode-switch button{font:inherit;font-size:13px;font-weight:600;padding:7px 14px;border-radius:9px;transition:all .18s}
+.mode-switch button:hover{color:var(--ink)}
+.mode-switch button.active{background:var(--accent);color:#fff;box-shadow:0 2px 8px color-mix(in srgb,var(--accent) 45%,transparent)}
+.bar{padding:12px 22px 6px;gap:8px}
+.bar span{text-transform:uppercase;letter-spacing:.06em;font-size:11px}
+button.sec-btn{border-radius:999px;padding:6px 13px;background:var(--chip);box-shadow:0 1px 2px rgba(0,0,0,.05);transition:all .15s}
+button.sec-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--chip);transform:translateY(-1px)}
+.legend{margin:8px 22px 14px;padding:12px 16px;gap:8px 18px;background:var(--band);border:1px solid var(--line);border-radius:var(--r)}
+.legend i{width:14px;height:14px;border-radius:4px;vertical-align:-3px}
+.board-section{margin:0 22px 18px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);background:var(--bg)}
+.board-badge{padding:11px 18px;font-size:13.5px;background:var(--band2);gap:12px;flex-wrap:wrap}
+.board-badge>span{display:flex;align-items:center;gap:9px}
+.board-badge>span::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--o-s);box-shadow:0 0 0 4px color-mix(in srgb,var(--o-s) 22%,transparent)}
+#sec-tobe .board-badge>span::before{background:var(--gr-s);box-shadow:0 0 0 4px color-mix(in srgb,var(--gr-s) 22%,transparent)}
+.wrap{border-bottom:0;scrollbar-width:thin;scrollbar-color:var(--g-s) transparent}
+.wrap::-webkit-scrollbar{height:10px;width:10px}.wrap::-webkit-scrollbar-thumb{background:var(--line);border-radius:6px}
+.lanes{width:136px;box-shadow:4px 0 10px -6px rgba(0,0,0,.18)}
+.lanes div{background:var(--band);border-left:3px solid var(--accent);padding:0 10px;font-size:12px;line-height:1.3}
+.lanes small.warn,.lanes small.info{margin-top:3px;line-height:1.25}
+.sh{stroke-width:1.5;filter:drop-shadow(0 1px 1.5px rgba(30,30,20,.16))}
+.nt{stroke-width:1.2}
+.e{stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+.hd{font-size:12.5px;font-weight:700;letter-spacing:.04em}
+@media (max-width:700px){header,.bar{padding-left:14px;padding-right:14px}.board-section,.legend{margin-left:12px;margin-right:12px}.lanes{width:104px}.h-title h1{font-size:16px}}
 </style></head><body>
 
 <header>
@@ -76,7 +110,7 @@ svg text{font-family:inherit;fill:var(--ink)}
 <div class="board-section" id="sec-asis">
   <div class="board-badge">
     <span>MODELO AS IS — Situación Actual</span>
-    <small>Levantamiento preliminar: los detalles marcados “Por validar” requieren confirmación del hospital.</small>
+    <small>Levantamiento preliminar: salidas explícitas de los rombos de decisión (Sí / No).</small>
   </div>
   <div class="wrap" id="wrap-asis">
     <div class="grid">
@@ -108,7 +142,7 @@ const svgTxt=(lines,cx,cy,fs,extra='')=>{const lh=fs+2.5,y0=cy-(lines.length-1)*
 function buildAsIs(){
   const P=170,NW=130,NH=60,LH=150,HB=50,RT=[14,80];
   const LANES=[["Servicios Clínicos","",""],["Abastecimiento y Compras","",""],["Gestión de Contratos","Responsabilidad por validar","warn"],["Proveedores y Despacho","",""],["Recepción y Bodegas","",""],["Sistemas y Registros","SASUR y Excel","warn"]];
-  const SECS=[["1","Programación",3],["2","Consolidación",3],["3","Adquisición",4],["4","Recepción",4],["5","Almacenamiento",5],["6","Retiro y consumo",5],["7","Vencimientos y destino final",7]];
+  const SECS=[["1","Programación",3],["2","Consolidación",3],["3","Adquisición",4],["4","Recepción",4],["5","Almacenamiento",5],["6","Vencimientos y destino final",5],["7","Retiro y consumo",5]];
   let sx=[],x=10;SECS.forEach(s=>{sx.push(x);x+=s[2]*P+30});const W=x+10,H=HB+6*LH;
   const N={};
   function n(id,s,c,l,t,k,txt,r=0,w=1,dy=0){const nx=sx[s]+15+c*P,ny=HB+l*LH+RT[r];let o={id,t,k,txt,w};
@@ -122,10 +156,17 @@ function buildAsIs(){
   n('c0',1,0,5,'db','p','SASUR');n('c1',1,0,1,'a','g','Descargan reportes de SASUR: stock, programación, licitaciones, ICP');
   n('c3',1,1,5,'doc','p','Planilla Excel');n('c2',1,1,1,'a','p','Cruzan manualmente los reportes en Excel');
   n('c4',1,2,1,'doc','p','Consolidado de compras');n('c5',1,1,1,'n','o','Sin integración automática entre reportes. Preparar la información toma ≈ 1 día completo',1,2);
-  n('q1',2,0,1,'d','a','¿Qué canal de abastecimiento corresponde?',0,1,60);n('q2',2,1,1,'a','g','Revisa informe ICP mensual de CENABAST');
-  n('q3',2,1,1,'n','o','Cumplimiento informado ≈ 71 %',1);n('q4',2,1,2,'a','g','Revisa saldo del convenio vigente · Por validar');
-  n('q5',2,1,2,'a','g','Prepara bases técnicas neutras (nueva licitación) · Por validar',1);n('q6',2,2,1,'a','g','Emite orden de compra contra el saldo disponible',1);
+  
+  // Sección 3: Adquisición estructurada y ordenada
+  n('q1',2,0,1,'d','a','¿Compra por intermedio (CENABAST)?');
+  n('q3',2,1,0,'n','o','Revisa informe ICP mensual (Cumplimiento ≈ 71 %)',1);
+  n('q2',2,1,1,'a','g','CENABAST (Programación)');
+  n('q4',2,1,2,'d','a','¿Existe convenio vigente?');
+  n('ra1',2,2,1,'a','g','Licitación o Convenio Marco',1);
+  n('ra2',2,2,2,'a','g','Compra Ágil o Trato Directo (casos puntuales)');
+  n('q8',2,2,3,'n','o','Trato Directo solo por causales justificadas: proveedor único, emergencia (desastre natural u otro) o imprevisto',0,2);
   n('q7',2,3,1,'doc','p','Orden de compra');
+
   n('r1',3,0,3,'a','b','Proveedor o CENABAST despacha la mercadería');n('r2',3,1,4,'a','b','Recepción física de la mercadería');
   n('r3',3,2,4,'d','a','¿El ingreso digital a SASUR se ha realizado?');n('r4',3,3,4,'a','o','Demora previa al registro digital ≈ 48 h (hasta 1 semana con incidencias)',1);
   n('r5',3,1,5,'n','o','Lo físicamente recibido no es lo visible en SASUR hasta el ingreso digital',0,2);
@@ -133,28 +174,50 @@ function buildAsIs(){
   n('a2n',4,1,4,'n','p','El reporte de stock identifica 27 bodegas',1);n('a3',4,2,4,'d','a','¿Se requiere traslado interno?');
   n('a4',4,3,4,'a','b','Traslado interno entre bodegas',1);n('a4n',4,3,5,'n','o','Durante el movimiento el stock puede no figurar disponible en SASUR');
   n('a5',4,4,4,'a','g','Stock disponible para retiro');
-  n('t1',5,0,0,'a','g','Solicitan insumos a bodega');n('t4',5,1,0,'n','o','Diferenciar programado, retirado y consumido. Ejemplo ilustrativo: 1.000 programadas vs 200–300 retiradas (no es un promedio general)',1,2);
-  n('t2',5,1,4,'a','b','Retiran efectivamente los insumos');n('t3',5,2,5,'a','p','Registran el retiro en SASUR');
-  n('t5',5,3,0,'d','a','¿El producto se consume efectivamente?');n('t6',5,4,0,'e','gr','Consumo clínico efectivo');
-  n('t7',5,4,4,'a','o','Existencias que permanecen sin consumir');
-  n('u1',6,0,5,'a','p','Consultan reporte de vencimientos a 180 días · responsable por validar');n('u2',6,1,5,'doc','p','Reporte de vencimientos a 180 días');
-  n('u3',6,2,4,'d','a','¿Se consume antes del vencimiento?');n('u4',6,3,0,'e','gr','Consumo efectivo');
-  n('u5',6,3,4,'a','o','Existencia remanente o sobrestock');n('u6',6,4,4,'d','a','¿Hay alternativa de uso o redistribución? Por validar');
-  n('u7',6,5,4,'a','b','Canje informal vía WhatsApp con la red hospitalaria');n('u8',6,5,4,'a','r','Destrucción certificada',1);
-  n('u9',6,6,4,'e','gr','Eventual canje exitoso');n('u10',6,6,4,'e','r','Pérdida por vencimiento / destrucción',1);
-  const E=[['p3','c1','Requerimientos'],['s1','p1'],['p1','p3'],['p1','p2','','dash b t'],['c0','c1','','dash t b'],['c1','c2'],['c3','c2','','dash t b'],['c2','c4'],['c2','c5','','dash b t'],
-  ['c4','q1',''],['q1','q2','CENABAST','u'],['q1','q4','Convenio\nvigente'],['q1','q5','Nueva licitación\nsin cartera','b l'],['q2','q3','','dash b t'],['q2','q7'],['q4','q6','Si hay saldo\ndisponible'],['q6','q7','','near'],['q5','q7','','near'],
+
+  // Sección 6 (Vencimientos y destino final antes del consumo)
+  n('u1',5,0,5,'a','p','Consultan reporte de vencimientos a 180 días · responsable por validar');
+  n('u2',5,1,5,'doc','p','Reporte de vencimientos a 180 días');
+  n('u3',5,2,4,'d','a','¿Se consume antes del vencimiento?');
+  n('u5',5,3,4,'a','o','Existencia remanente o sobrestock');
+  n('u6',5,4,4,'d','a','¿Hay alternativa de uso o redistribución?');
+  n('u7',5,5,4,'a','b','Canje informal vía WhatsApp con la red hospitalaria');
+  n('u8',5,5,4,'a','r','Destrucción certificada',1);
+  n('u9',5,6,4,'e','gr','Eventual canje exitoso');
+  n('u10',5,6,4,'e','r','Pérdida por vencimiento / destrucción',1);
+
+  // Sección 7 (Retiro y consumo posterior)
+  n('t1',6,0,0,'a','g','Solicitan insumos a bodega');
+  n('t4',6,1,0,'n','o','Diferenciar programado, retirado y consumido. Ejemplo ilustrativo: 1.000 programadas vs 200–300 retiradas',1,2);
+  n('t2',6,1,4,'a','b','Retiran efectivamente los insumos');
+  n('t3',6,2,5,'a','p','Registran el retiro en SASUR');
+  n('t5',6,3,0,'d','a','¿El producto se consume efectivamente?');
+  n('t6',6,4,0,'e','gr','Consumo clínico efectivo');
+  n('t7',6,4,4,'a','o','Existencias que permanecen sin consumir');
+
+  const E=[['p3','c1','Requerimientos'],['s1','p1'],['p1','p3'],['p1','p2','','dash b t'],['c0','c1','','dash up'],['c1','c2'],['c3','c2','','dash up'],['c2','c4'],['c2','c5','','dash b t'],
+  ['c4','q1',''],
+  ['q1','q2','Sí'],['q1','q4','No','b l'],['q2','q3','','dash up'],['q2','q7'],
+  ['q4','ra1','Sí','u'],['q4','ra2','No'],['ra1','q7','','rv'],['ra2','q7','','rv'],['ra2','q8','','dash dv'],
+
   ['q7','r1','Orden de compra\ny despacho'],['r1','r2'],['r2','r3'],['r3','r4','No','b l'],['r3','a1','Sí · producto recibido\ny registro de ingreso','near'],['r4','a1','','near'],['r2','r5','','dash b t'],
   ['a1','a2'],['a2','a3'],['a2','a2n','','dash b t'],['a3','a4','Sí','b l'],['a3','a5','No'],['a4','a5'],['a4','a4n','','dash b t'],
-  ['a5','t1','Stock\ndisponible'],['t1','t2'],['t2','t3','','dash'],['t2','t5','','near'],['t5','t6','Sí'],['t5','t7','No','b l'],
-  ['t7','u1','Existencias remanentes\nsin consumir'],['u1','u2'],['u2','u3'],['u3','u4','Sí','u'],['u3','u5','No'],['u5','u6'],['u6','u7','Sí\n(por validar)'],['u6','u8','No','b l'],['u7','u9'],['u8','u10']];
+
+  // Secuencia reordenada: Almacenamiento -> Vencimientos -> Retiro y consumo
+  ['a5','u1','Inventario disponible'],
+  ['u1','u2'],['u2','u3'],['u3','t1','Sí','u'],['u3','u5','No'],['u5','u6'],['u6','u7','Sí\n(por validar)'],['u6','u8','No','b l'],['u7','u9'],['u8','u10'],
+  ['t1','t2'],['t2','t3','','dash'],['t2','t5','','near'],['t5','t6','Sí'],['t5','t7','No','b l'],['t7','u1','Existencias remanentes','lp']];
 
   let s=`<defs><marker id="ar-asis" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
-  SECS.forEach((q,i)=>{s+=`<rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${H}" fill="${i%2?'var(--band)':'var(--bg)'}" opacity="${i%2?.55:1}"/><rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${HB-6}" fill="var(--band2)"/><text class="hd" x="${sx[i]+12}" y="${(HB-6)/2}" dominant-baseline="central">${q[0]} · ${q[1].toUpperCase()}</text>`});
+  SECS.forEach((q,i)=>{s+=`<rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${H}" fill="${i%2?'var(--band)':'var(--bg)'}" opacity="${i%2?.55:1}"/><rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${HB-6}" fill="var(--band2)"/><rect x="${sx[i]}" y="${HB-9}" width="${q[2]*P+30}" height="3" fill="var(--accent)" opacity=".6"/><text class="hd" x="${sx[i]+12}" y="${(HB-6)/2}" dominant-baseline="central">${q[0]} · ${q[1].toUpperCase()}</text>`});
   for(let l=0;l<=6;l++)s+=`<line x1="0" x2="${W}" y1="${HB+l*LH}" y2="${HB+l*LH}" stroke="var(--line)"/>`;
   const L=o=>o.x,Rg=o=>o.x+o.w2;
   E.forEach(([a,b,lbl,opt=''])=>{const A=N[a],B=N[b],f=opt.split(' ');let p;
-   if(f.includes('b')&&f.includes('t'))p=[[A.cx,A.y+A.h],[A.cx,B.y]];
+   if(f.includes('lp')){const ly=B.y+B.h+36;p=[[A.cx,A.y+A.h],[A.cx,ly],[B.cx,ly],[B.cx,B.y+B.h]]}
+   else if(f.includes('dv'))p=[[A.cx,A.y+A.h],[A.cx,B.y]];
+   else if(f.includes('rv')){const vy=B.cy<A.cy?B.y+B.h:B.y;p=[[Rg(A),A.cy],[B.cx,A.cy],[B.cx,vy]]}
+   else if(f.includes('up'))p=[[A.cx,A.y],[A.cx,B.y+B.h]];
+   else if(f.includes('b')&&f.includes('t'))p=[[A.cx,A.y+A.h],[A.cx,B.y]];
    else if(f.includes('t')&&f.includes('b'))p=[[A.cx,A.y],[A.cx,B.y+B.h]];
    else if(f.includes('b')&&f.includes('l'))p=[[A.cx,A.y+A.h],[A.cx,B.cy],[L(B),B.cy]];
    else if(f.includes('u'))p=[[A.cx,A.y],[A.cx,B.cy],[L(B),B.cy]];
@@ -163,15 +226,16 @@ function buildAsIs(){
    s+=`<polyline class="e ${f.includes('dash')?'dash':''}" points="${p.map(q=>q.join(',')).join(' ')}" marker-end="url(#ar-asis)"/>`;
   });
   const sh=(o)=>{const c='k-'+o.k,{x,y,w2:w,h}=o;
-   if(o.t=='a')return `<rect class="${c} sh" x="${x}" y="${y}" width="${w}" height="${h}" rx="7"/>`+svgTxt(wrapText(o.txt,22),o.cx,o.cy,10.5);
-   if(o.t=='n')return `<rect class="${c} nt" x="${x}" y="${y}" width="${w}" height="${h}" rx="7" fill-opacity=".6"/>`+svgTxt(wrapText(o.txt,w>200?50:22),o.cx,o.cy,10,'font-style="italic"');
+   if(o.t=='a')return `<rect class="${c} sh" x="${x}" y="${y}" width="${w}" height="${h}" rx="10"/>`+svgTxt(wrapText(o.txt,22),o.cx,o.cy,10.5);
+   if(o.t=='n')return `<rect class="${c} nt" x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill-opacity=".6"/>`+svgTxt(wrapText(o.txt,w>200?50:22),o.cx,o.cy,10,'font-style="italic"');
    if(o.t=='d')return `<polygon class="${c} sh" points="${o.cx},${y} ${x+w},${o.cy} ${o.cx},${y+h} ${x},${o.cy}"/>`+svgTxt(wrapText(o.txt,17),o.cx,o.cy,9.5);
    if(o.t=='doc')return `<path class="${c} sh" d="M${x},${y} h${w} v${h-9} c${-w*.25},-10 ${-w*.25},10 ${-w*.5},0 s${-w*.25},10 ${-w*.5},0 z"/>`+svgTxt(wrapText(o.txt,22),o.cx,o.cy-3,10.5);
    if(o.t=='db'){const bw=100,bx=x+(w-bw)/2;return `<path class="${c} sh" d="M${bx},${y+9} a50,9 0 0 1 ${bw},0 v${h-18} a50,9 0 0 1 ${-bw},0 z"/><path class="${c} sh" fill="none" d="M${bx},${y+9} a50,9 0 0 0 ${bw},0"/>`+svgTxt([o.txt],o.cx,o.cy+4,11,'font-weight="700"')}
    if(o.t=='s'||o.t=='e')return `<circle class="${c}" cx="${o.cx}" cy="${o.cy}" r="15" stroke-width="${o.t=='e'?3.5:1.5}"/>`+svgTxt(wrapText(o.txt,22),o.cx,o.cy+34,10);
    return''};
   Object.values(N).forEach(o=>s+=sh(o));
-  E.forEach(([a,b,lbl,opt=''])=>{if(!lbl)return;const B=N[b],tl=(B.t=='s'||B.t=='e')?B.x:B.t=='d'?B.x+8:B.x;const ls=lbl.split('\n'),lh=12;
+  E.forEach(([a,b,lbl,opt=''])=>{if(!lbl)return;const A0=N[a],f0=opt.split(' ');if(f0.includes('lp')){const B1=N[b],ly=B1.y+B1.h+36;s+=`<text class="lb" text-anchor="middle" x="${(A0.cx+B1.cx)/2}" y="${ly-6}">${lbl}</text>`;return}if(A0.t=='d'&&!lbl.includes('\n')){const up=f0.includes('u'),dn=f0.includes('b')&&f0.includes('l');const lx=(up||dn)?A0.cx+8:A0.x+A0.w2+6,ly=up?A0.y-6:dn?A0.y+A0.h+15:A0.cy-7;s+=`<text class="lb" font-size="10.5" x="${lx}" y="${ly}">${lbl}</text>`;return}
+   const B=N[b],tl=(B.t=='s'||B.t=='e')?B.x:B.t=='d'?B.x+8:B.x;const ls=lbl.split('\n'),lh=12;
    s+=`<text class="lb" text-anchor="end" font-size="10.5">`+ls.map((l,i)=>`<tspan x="${tl-8}" y="${B.cy-8-(ls.length-1-i)*lh}">${l}</tspan>`).join('')+`</text>`});
   const svg=document.getElementById('svg-asis');svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('width',W);svg.setAttribute('height',H);svg.innerHTML=s;
   const lanes=document.getElementById('lanes-asis');lanes.style.paddingTop=HB+'px';
@@ -184,7 +248,7 @@ function buildAsIs(){
 function buildToBe(){
   const P=170,NW=130,NH=66,LH=150,HB=50,RT=[8,78];
   const LANES=[["Servicios Clínicos","",""],["Abastecimiento y Compras","incluye Licitaciones","info"],["Gestión de Contratos","",""],["Proveedores y Despacho","",""],["Recepción y Bodegas","incluye Distribución y Paquetización","info"],["Sistemas y Registros","SASUR, Excel + Power Query y Semáforo de Stock","info"]];
-  const SECS=[["1","Programación",3],["2","Consolidación",3],["3","Adquisición",4],["4","Recepción",4],["5","Almacenamiento y control de stock",4],["6","Distribución, retiro y consumo",4],["7","Gestión preventiva de excedentes, vencimientos y mejora continua",5]];
+  const SECS=[["1","Programación",3],["2","Consolidación",3],["3","Adquisición",4],["4","Recepción",4],["5","Almacenamiento y control de stock",4],["6","Gestión preventiva de vencimientos y excedentes",4],["7","Distribución, retiro y consumo",7]];
   let sx=[],x=10;SECS.forEach(s=>{sx.push(x);x+=s[2]*P+30});const W=x+10,H=HB+6*LH+26;
   const N={};
   function n(id,s,c,l,t,k,txt,r=0,w=1){const nx=sx[s]+15+c*P,ny=HB+l*LH+RT[r];let o={id,t,k,txt,w};
@@ -200,12 +264,16 @@ function buildToBe(){
   n('e2n',1,1,0,'n','gr','Elimina el cruce manual de ≈ 1 día completo',1);
   n('e3d',1,2,5,'db','p','Semáforo');n('e3',1,2,1,'a','gr','Revisión del consolidado con semáforo de stock');
   n('e3n',1,2,0,'n','o','Quiebres, sobre-stock y vencimientos visibles antes de comprar',1);
-  n('q1',2,0,1,'d','o','¿Qué mecanismo de compra corresponde?');n('qn',2,0,0,'n','g','Decisión coordinada: Compras, Licitaciones y Gestión de Contratos',1);
+  
+  // TO BE Sección 3 ordenado con salidas claras de los rombos
+  n('q1',2,0,1,'d','o','¿Compra por intermedio (CENABAST)?');
   n('q2',2,1,1,'a','gr','CENABAST: seguimiento mensual de faltantes recurrentes (brecha ICP)');
-  n('q4',2,1,2,'a','gr','Convenio vigente: control anticipado de saldo y fechas de término');
-  n('q5',2,1,2,'a','gr','Nueva licitación: preparación anticipada por alerta, bases técnicas neutras',1);
-  n('qa',2,1,3,'n','o','Alerta de licitación (sistema)');
-  n('q6',2,2,1,'a','gr','Emisión de orden de compra y seguimiento activo al proveedor');n('q7',2,3,1,'doc','p','Orden de compra');
+  n('q4',2,1,2,'d','o','¿Existe convenio vigente?');
+  n('ra1',2,2,1,'a','gr','Licitación o Convenio Marco: seguimiento de saldo y plazos',1);
+  n('ra2',2,2,2,'a','gr','Compra Ágil o Trato Directo (casos puntuales)');
+  n('q8',2,2,3,'n','gr','Trato Directo solo por causales justificadas: proveedor único, emergencia (desastre natural u otro) o imprevisto',0,2);
+  n('q7',2,3,1,'doc','p','Orden de compra');
+
   n('r1',3,0,3,'a','b','Proveedor o CENABAST despacha la mercadería');n('r2',3,1,4,'a','b','Recepción física verificada');
   n('r3',3,2,5,'a','p','Registro digital en SASUR ligado a la recepción física');
   n('rn',3,2,4,'n','gr','Mejora crítica: reduce el desfase de ≈ 48 h hasta 1 semana');
@@ -214,32 +282,53 @@ function buildToBe(){
   n('a2',4,1,4,'a','gr','Control de niveles de stock y vencimientos por bodega');n('a2d',4,1,5,'db','p','SASUR');
   n('a3',4,2,5,'a','o','Alertas automáticas por criticidad: quiebre, crítico, sobre-stock');
   n('a4',4,3,4,'a','b','Traslados internos con trazabilidad: stock visible durante el movimiento');
-  n('t1',5,0,4,'a','o','Validación previa: flujo normal sin excedentes críticos');
-  n('t2',5,1,4,'a','b','Distribución y Paquetización entregan según necesidad validada');
-  n('t3',5,2,5,'a','p','Registro del retiro efectivo en SASUR');
-  n('tn',5,3,5,'n','gr','Trazabilidad: programado, entregado y consumo clínico efectivo',1);
-  n('t5',5,3,0,'e','gr','Consumo clínico efectivo');
-  n('d1',6,0,4,'d','o','¿Hay excedente o vencimiento próximo?');
-  n('n1',6,1,4,'a','b','Distribución normal según necesidad (Distribución y Paquetización)');
-  n('y1',6,1,4,'a','b','Protocolo formal: retorno de excedentes y redistribución interna antes de vencer',1);
-  n('yn',6,3,4,'n','gr','Reemplaza el canje informal y evita pérdidas por destrucción o vencimiento',1);
-  n('n2',6,2,0,'a','gr','Consumo clínico efectivo');n('v',6,2,5,'a','p','Revisión periódica de los 5 indicadores clave');
-  n('vn',6,3,5,'n','p','Indicadores: % ejecución vs. programado · tiempo de consolidación · días recepción–registro · % vencimientos · ocupación de bodegas',0,2);
+
+  // TO BE Sección 6 (Prevención de vencimientos antes del consumo)
+  n('d1',5,0,4,'d','o','¿Hay excedente o vencimiento próximo?');
+  n('n1',5,1,4,'a','b','Distribución normal según necesidad (Distribución y Paquetización)');
+  n('y1',5,1,4,'a','gr','Protocolo formal: retorno de excedentes y redistribución interna antes de vencer',1);
+  n('yn',5,3,4,'n','gr','Reemplaza el canje informal y evita pérdidas por destrucción o vencimiento',1);
+  n('n2',5,2,0,'a','gr','Lotes aptos validados');
+
+  // TO BE Sección 7 (Retiro y consumo clínico efectivo)
+  n('t1',6,0,4,'a','o','Validación previa: flujo normal sin excedentes críticos');
+  n('t2',6,1,4,'a','b','Distribución y Paquetización entregan según necesidad validada');
+  n('t3',6,2,5,'a','p','Registro del retiro efectivo en SASUR');
+  n('tn',6,3,5,'n','gr','Trazabilidad: programado, entregado y consumo clínico efectivo',1);
+  n('t5',6,3,0,'a','gr','Consumo clínico efectivo');
+  n('v',6,4,5,'a','p','Revisión periódica de los 5 indicadores clave');
+  n('vn',6,5,5,'n','p','Indicadores: % ejecución vs. programado · tiempo de consolidación · días recepción–registro · % vencimientos · ocupación de bodegas',0,2);
+
   const E=[['s1','p1'],['p1','p3'],['pn','p1','','dash'],['db1','p1','','dash up'],['dn','db1','','dash'],
   ['p3','e1','Requerimientos\nbasados en\nconsumo histórico'],['e0','e1','','dash up'],['e1','e2'],['e2d','e2','','dash up'],['e2','e2n','','dash up'],['e2','e3'],['e3d','e3','','dash up'],['e3','e3n','','dash up'],
-  ['e3','q1','Consolidado\nautomatizado\ny validado'],['q1','q2','CENABAST'],['q1','q4','Convenio\nvigente'],['q1','q5','Nueva\nlicitación'],['q1','qn','','dash up'],['q2','q6'],['q4','q6','','near'],['q5','q6','','near'],['q5','qa','','dash b t'],['q6','q7'],
+  ['e3','q1','Consolidado\nautomatizado\ny validado'],
+  // Conexiones rombo q1 TO BE
+  ['q1','q2','Sí'],['q1','q4','No','b l'],['q2','q7'],
+  ['q4','ra1','Sí','u'],['q4','ra2','No'],['ra1','q7','','rv'],['ra2','q7','','rv'],['ra2','q8','','dash dv'],
+
   ['q7','r1','Orden de compra con\nseguimiento y despacho'],['r1','r2'],['r2','r3','Registro\ninmediato'],['r3','rn','','dash up'],['rn','rk','','dash'],['r3','a1','Ingreso físico verificado\ny registro sincronizado','near'],
-  ['a1','a2'],['a2d','a2','','dash up'],['a2','a3','','dash'],['a2','a4'],['a4','t1','Stock controlado\ncon alertas de\ncriticidad'],
-  ['t1','t2'],['t2','t3'],['t3','t5'],['t3','tn','','dash'],['t2','d1','Monitoreo de\nremanentes'],
-  ['d1','n1','No'],['d1','y1','Sí'],['n1','n2'],['y1','v'],['y1','yn','','dash'],['n2','v','','b t'],['v','vn','','dash'],
+  ['a1','a2'],['a2d','a2','','dash up'],['a2','a3','','dash'],['a2','a4'],['a4','d1','Stock controlado\ncon alertas'],
+  
+  // Flujo preventivo de vencimientos en Sección 6 y luego consumo en Sección 7
+  ['d1','n1','No'],
+  ['d1','y1','Sí','b l'],
+  ['n1','n2'],
+  ['y1','t1','Redistribuido'],
+  ['yn','t1','','dash'],
+  ['n2','t1','Validado'],
+  ['t1','t2'],['t2','t3'],['t3','t5'],['t3','tn','','dash'],
+  ['t5','v','Consumo registrado'],
+  ['v','vn','','dash'],
   ['v','db1','Retroalimentación de los 5 indicadores hacia la Sección 1','dash fb']];
 
   let s=`<defs><marker id="ar-tobe" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
-  SECS.forEach((q,i)=>{s+=`<rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${H}" fill="${i%2?'var(--band)':'var(--bg)'}" opacity="${i%2?.55:1}"/><rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${HB-6}" fill="var(--band2)"/><text class="hd" x="${sx[i]+12}" y="${(HB-6)/2}" dominant-baseline="central">${q[0]} · ${q[1].toUpperCase()}</text>`});
+  SECS.forEach((q,i)=>{s+=`<rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${H}" fill="${i%2?'var(--band)':'var(--bg)'}" opacity="${i%2?.55:1}"/><rect x="${sx[i]}" y="0" width="${q[2]*P+30}" height="${HB-6}" fill="var(--band2)"/><rect x="${sx[i]}" y="${HB-9}" width="${q[2]*P+30}" height="3" fill="var(--accent)" opacity=".6"/><text class="hd" x="${sx[i]+12}" y="${(HB-6)/2}" dominant-baseline="central">${q[0]} · ${q[1].toUpperCase()}</text>`});
   for(let l=0;l<=6;l++)s+=`<line x1="0" x2="${W}" y1="${HB+l*LH}" y2="${HB+l*LH}" stroke="var(--line)"/>`;
   const L=o=>o.x,Rg=o=>o.x+o.w2;
   E.forEach(([a,b,lbl,opt=''])=>{const A=N[a],B=N[b],f=opt.split(' ');let p;
-   if(f.includes('fb'))p=[[A.cx,A.y+A.h],[A.cx,H-10],[B.cx,H-10],[B.cx,B.y+B.h]];
+   if(f.includes('dv'))p=[[A.cx,A.y+A.h],[A.cx,B.y]];
+   else if(f.includes('rv')){const vy=B.cy<A.cy?B.y+B.h:B.y;p=[[Rg(A),A.cy],[B.cx,A.cy],[B.cx,vy]]}
+   else if(f.includes('fb'))p=[[A.cx,A.y+A.h],[A.cx,H-10],[B.cx,H-10],[B.cx,B.y+B.h]];
    else if(f.includes('up'))p=[[A.cx,A.y],[A.cx,B.y+B.h]];
    else if(f.includes('b')&&f.includes('t'))p=[[A.cx,A.y+A.h],[A.cx,B.y]];
    else if(f.includes('b')&&f.includes('l'))p=[[A.cx,A.y+A.h],[A.cx,B.cy],[L(B),B.cy]];
@@ -249,15 +338,16 @@ function buildToBe(){
    s+=`<polyline class="e ${f.includes('dash')?'dash':''}" points="${p.map(q=>q.join(',')).join(' ')}" marker-end="url(#ar-tobe)"/>`;
   });
   const sh=(o)=>{const c='k-'+o.k,{x,y,w2:w,h}=o;
-   if(o.t=='a')return `<rect class="${c} sh" x="${x}" y="${y}" width="${w}" height="${h}" rx="7"/>`+svgTxt(wrapText(o.txt,22),o.cx,o.cy,10.5);
-   if(o.t=='n')return `<rect class="${c} nt" x="${x}" y="${y}" width="${w}" height="${h}" rx="7" fill-opacity=".6"/>`+svgTxt(wrapText(o.txt,w>200?50:22),o.cx,o.cy,10,'font-style="italic"');
+   if(o.t=='a')return `<rect class="${c} sh" x="${x}" y="${y}" width="${w}" height="${h}" rx="10"/>`+svgTxt(wrapText(o.txt,22),o.cx,o.cy,10.5);
+   if(o.t=='n')return `<rect class="${c} nt" x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill-opacity=".6"/>`+svgTxt(wrapText(o.txt,w>200?50:22),o.cx,o.cy,10,'font-style="italic"');
    if(o.t=='d')return `<polygon class="${c} sh" points="${o.cx},${y} ${x+w},${o.cy} ${o.cx},${y+h} ${x},${o.cy}"/>`+svgTxt(wrapText(o.txt,17),o.cx,o.cy,9.5);
    if(o.t=='doc')return `<path class="${c} sh" d="M${x},${y} h${w} v${h-9} c${-w*.25},-10 ${-w*.25},10 ${-w*.5},0 s${-w*.25},10 ${-w*.5},0 z"/>`+svgTxt(wrapText(o.txt,22),o.cx,o.cy-3,10.5);
    if(o.t=='db'){const bw=100,bx=x+(w-bw)/2;return `<path class="${c} sh" d="M${bx},${y+9} a50,9 0 0 1 ${bw},0 v${h-18} a50,9 0 0 1 ${-bw},0 z"/><path class="${c} sh" fill="none" d="M${bx},${y+9} a50,9 0 0 0 ${bw},0"/>`+svgTxt([o.txt],o.cx,o.cy+4,11,'font-weight="700"')}
    if(o.t=='s'||o.t=='e')return `<circle class="${c}" cx="${o.cx}" cy="${o.cy}" r="15" stroke-width="${o.t=='e'?3.5:1.5}"/>`+svgTxt(wrapText(o.txt,22),o.cx,o.cy+34,10);
    return''};
   Object.values(N).forEach(o=>s+=sh(o));
-  E.forEach(([a,b,lbl,opt=''])=>{if(!lbl)return;if(opt.split(' ').includes('fb')){s+=`<text class="lb" font-size="11" x="${N[b].cx+16}" y="${H-16}">${lbl}</text>`;return}const B=N[b],tl=(B.t=='s'||B.t=='e')?B.x:B.t=='d'?B.x+8:B.x;const ls=lbl.split('\n'),lh=12;
+  E.forEach(([a,b,lbl,opt=''])=>{if(!lbl)return;const A0=N[a],f0=opt.split(' ');if(A0.t=='d'&&!lbl.includes('\n')){const up=f0.includes('u'),dn=f0.includes('b')&&f0.includes('l');const lx=(up||dn)?A0.cx+8:A0.x+A0.w2+6,ly=up?A0.y-6:dn?A0.y+A0.h+15:A0.cy-7;s+=`<text class="lb" font-size="10.5" x="${lx}" y="${ly}">${lbl}</text>`;return}
+   if(opt.split(' ').includes('fb')){s+=`<text class="lb" font-size="11" x="${N[b].cx+16}" y="${H-16}">${lbl}</text>`;return}const B=N[b],tl=(B.t=='s'||B.t=='e')?B.x:B.t=='d'?B.x+8:B.x;const ls=lbl.split('\n'),lh=12;
    s+=`<text class="lb" text-anchor="end" font-size="10.5">`+ls.map((l,i)=>`<tspan x="${tl-8}" y="${B.cy-8-(ls.length-1-i)*lh}">${l}</tspan>`).join('')+`</text>`});
   const svg=document.getElementById('svg-tobe');svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('width',W);svg.setAttribute('height',H);svg.innerHTML=s;
   const lanes=document.getElementById('lanes-tobe');lanes.style.paddingTop=HB+'px';
